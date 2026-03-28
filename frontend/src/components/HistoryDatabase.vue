@@ -744,13 +744,13 @@ onUnmounted(() => {
   font-size: 0.5rem;
 }
 
-/* 进度状态颜色 */
-.card-progress.completed { color: #10B981; }    /* 已完成 - 绿色 */
-.card-progress.in-progress { color: #F59E0B; }  /* 进行中 - 橙色 */
-.card-progress.not-started { color: #9CA3AF; }  /* 未开始 - 灰色 */
+/* Cores do estado de progresso */
+.card-progress.completed { color: #10B981; }    /* Concluído - verde */
+.card-progress.in-progress { color: #F59E0B; }  /* Em andamento - laranja */
+.card-progress.not-started { color: #9CA3AF; }  /* Não iniciado - cinza */
 .card-status.pending { color: #9CA3AF; }
 
-/* 文件列表区域 */
+/* Área da lista de arquivos */
 .card-files-wrapper {
   position: relative;
   width: 100%;

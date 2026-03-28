@@ -788,25 +788,25 @@ const startPrepareSimulation = async () => {
     
     if (res.success && res.data) {
       if (res.data.already_prepared) {
-        addLog('检测到已有完成的准备工作，直接使用')
+        addLog('Preparação anterior concluída detectada, utilizando diretamente')
         await loadPreparedData()
         return
       }
       
       taskId.value = res.data.task_id
-      addLog(`准备任务已启动`)
+      addLog(`Tarefa de preparação iniciada`)
       addLog(`  └─ Task ID: ${res.data.task_id}`)
-      
-      // 立即设置预期Agent总数（从prepare接口返回值获取）
+
+      // Define imediatamente o total esperado de Agentes (obtido do retorno da API prepare)
       if (res.data.expected_entities_count) {
         expectedTotal.value = res.data.expected_entities_count
-        addLog(`从Zep图谱读取到 ${res.data.expected_entities_count} 个实体`)
+        addLog(`${res.data.expected_entities_count} entidades lidas do grafo Zep`)
         if (res.data.entity_types && res.data.entity_types.length > 0) {
-          addLog(`  └─ 实体类型: ${res.data.entity_types.join(', ')}`)
+          addLog(`  └─ Tipos de entidade: ${res.data.entity_types.join(', ')}`)
         }
       }
-      
-      addLog('开始轮询准备进度...')
+
+      addLog('Iniciando polling do progresso de preparação...')
       // 开始轮询进度
       startPolling()
       // 开始实时获取 Profiles
