@@ -211,7 +211,7 @@
           </div>
         </div>
         
-        <!-- 图谱图例 -->
+        <!-- Legenda do grafo -->
         <div v-if="graphData" class="graph-legend">
           <div class="legend-item" v-for="type in entityTypes" :key="type.name">
             <span class="legend-dot" :style="{ background: type.color }"></span>
