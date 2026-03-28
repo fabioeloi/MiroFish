@@ -807,16 +807,16 @@ const startPrepareSimulation = async () => {
       }
 
       addLog('Iniciando polling do progresso de preparação...')
-      // 开始轮询进度
+      // Inicia o polling de progresso
       startPolling()
-      // 开始实时获取 Profiles
+      // Inicia a busca em tempo real de Profiles
       startProfilesPolling()
     } else {
-      addLog(`准备失败: ${res.error || '未知错误'}`)
+      addLog(`Falha na preparação: ${res.error || 'Erro desconhecido'}`)
       emit('update-status', 'error')
     }
   } catch (err) {
-    addLog(`准备异常: ${err.message}`)
+    addLog(`Exceção na preparação: ${err.message}`)
     emit('update-status', 'error')
   }
 }
@@ -855,15 +855,15 @@ const pollPrepareStatus = async () => {
     if (res.success && res.data) {
       const data = res.data
       
-      // 更新进度
+      // Atualiza o progresso
       prepareProgress.value = data.progress || 0
       progressMessage.value = data.message || ''
-      
-      // 解析阶段信息并输出详细日志
+
+      // Analisa informações de fase e exibe logs detalhados
       if (data.progress_detail) {
         currentStage.value = data.progress_detail.current_stage_name || ''
-        
-        // 输出详细进度日志（避免重复）
+
+        // Exibe logs de progresso detalhados (evita duplicação)
         const detail = data.progress_detail
         const logKey = `${detail.current_stage}-${detail.current_item}-${detail.total_items}`
         if (logKey !== lastLoggedMessage && detail.item_description) {
@@ -876,32 +876,32 @@ const pollPrepareStatus = async () => {
           }
         }
       } else if (data.message) {
-        // 从消息中提取阶段
+        // Extrai a fase da mensagem
         const match = data.message.match(/\[(\d+)\/(\d+)\]\s*([^:]+)/)
         if (match) {
           currentStage.value = match[3].trim()
         }
-        // 输出消息日志（避免重复）
+        // Exibe log da mensagem (evita duplicação)
         if (data.message !== lastLoggedMessage) {
           lastLoggedMessage = data.message
           addLog(data.message)
         }
       }
       
-      // 检查是否完成
+      // Verifica se a preparação foi concluída
       if (data.status === 'completed' || data.status === 'ready' || data.already_prepared) {
-        addLog('✓ 准备工作已完成')
+        addLog('✓ Preparação concluída')
         stopPolling()
         stopProfilesPolling()
         await loadPreparedData()
       } else if (data.status === 'failed') {
-        addLog(`✗ 准备失败: ${data.error || '未知错误'}`)
+        addLog(`✗ Falha na preparação: ${data.error || 'Erro desconhecido'}`)
         stopPolling()
         stopProfilesPolling()
       }
     }
   } catch (err) {
-    console.warn('轮询状态失败:', err)
+    console.warn('Falha no polling de status:', err)
   }
 }
 
