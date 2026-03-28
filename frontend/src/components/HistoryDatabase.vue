@@ -607,7 +607,7 @@ onUnmounted(() => {
     linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
   background-size: 50px 50px;
-  /* 从左上角开始定位，高度变化时只在底部扩展，不影响已有网格位置 */
+  /* Posiciona a partir do canto superior esquerdo; ao mudar a altura, expande apenas na parte inferior sem afetar a posição da grade existente */
   background-position: top left;
 }
 
@@ -623,7 +623,7 @@ onUnmounted(() => {
   pointer-events: none;
 }
 
-/* 标题区域 */
+/* Área do título */
 .section-header {
   position: relative;
   z-index: 100;
@@ -651,7 +651,7 @@ onUnmounted(() => {
   text-transform: uppercase;
 }
 
-/* 卡片容器 */
+/* Contêiner de cartões */
 .cards-container {
   position: relative;
   display: flex;
@@ -659,10 +659,10 @@ onUnmounted(() => {
   align-items: flex-start;
   padding: 0 40px;
   transition: min-height 700ms cubic-bezier(0.23, 1, 0.32, 1);
-  /* min-height 由 JS 动态计算，根据卡片数量自适应 */
+  /* min-height calculado dinamicamente pelo JS conforme a quantidade de cartões */
 }
 
-/* 项目卡片 */
+/* Cartão de projeto */
 .project-card {
   position: absolute;
   width: 280px;
@@ -685,7 +685,7 @@ onUnmounted(() => {
   z-index: 1000 !important;
 }
 
-/* 卡片头部 */
+/* Cabeçalho do cartão */
 .card-header {
   display: flex;
   justify-content: space-between;
@@ -703,7 +703,7 @@ onUnmounted(() => {
   font-weight: 500;
 }
 
-/* 功能状态图标组 */
+/* Grupo de ícones de status de funcionalidade */
 .card-status-icons {
   display: flex;
   align-items: center;
@@ -720,17 +720,17 @@ onUnmounted(() => {
   opacity: 1;
 }
 
-/* 不同功能的颜色 */
-.status-icon:nth-child(1).available { color: #3B82F6; } /* 图谱构建 - 蓝色 */
-.status-icon:nth-child(2).available { color: #F59E0B; } /* 环境搭建 - 橙色 */
-.status-icon:nth-child(3).available { color: #10B981; } /* 分析报告 - 绿色 */
+/* Cores por funcionalidade */
+.status-icon:nth-child(1).available { color: #3B82F6; } /* Construção do Grafo - azul */
+.status-icon:nth-child(2).available { color: #F59E0B; } /* Configuração do Ambiente - laranja */
+.status-icon:nth-child(3).available { color: #10B981; } /* Relatório de Análise - verde */
 
 .status-icon.unavailable {
   color: #D1D5DB;
   opacity: 0.5;
 }
 
-/* 轮数进度显示 */
+/* Exibição do progresso de rodadas */
 .card-progress {
   display: flex;
   align-items: center;

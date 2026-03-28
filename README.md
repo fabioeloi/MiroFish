@@ -91,108 +91,108 @@ Clique na imagem para assistir à previsão profunda do MiroFish sobre o final p
 4. **Geração de Relatório**: ReportAgent com conjunto rico de ferramentas para interação profunda com o ambiente pós-simulação
 5. **Interação Profunda**: Converse com qualquer agente no mundo simulado & Interaja com o ReportAgent
 
-## 🚀 快速开始
+## 🚀 Início Rápido
 
-### 一、源码部署（推荐）
+### Opção 1: Implantação por Código-Fonte (Recomendado)
 
-#### 前置要求
+#### Pré-requisitos
 
-| 工具 | 版本要求 | 说明 | 安装检查 |
-|------|---------|------|---------|
-| **Node.js** | 18+ | 前端运行环境，包含 npm | `node -v` |
-| **Python** | ≥3.11, ≤3.12 | 后端运行环境 | `python --version` |
-| **uv** | 最新版 | Python 包管理器 | `uv --version` |
+| Ferramenta | Versão | Descrição | Verificar Instalação |
+|------------|--------|-----------|---------------------|
+| **Node.js** | 18+ | Ambiente de execução frontend, inclui npm | `node -v` |
+| **Python** | ≥3.11, ≤3.12 | Ambiente de execução backend | `python --version` |
+| **uv** | Mais recente | Gerenciador de pacotes Python | `uv --version` |
 
-#### 1. 配置环境变量
+#### 1. Configurar Variáveis de Ambiente
 
 ```bash
-# 复制示例配置文件
+# Copiar o arquivo de configuração de exemplo
 cp .env.example .env
 
-# 编辑 .env 文件，填入必要的 API 密钥
+# Editar o arquivo .env e preencher as chaves de API necessárias
 ```
 
-**必需的环境变量：**
+**Variáveis de Ambiente Obrigatórias:**
 
 ```env
-# LLM API配置（支持 OpenAI SDK 格式的任意 LLM API）
-# 推荐使用阿里百炼平台qwen-plus模型：https://bailian.console.aliyun.com/
-# 注意消耗较大，可先进行小于40轮的模拟尝试
+# Configuração da API LLM (suporta qualquer API LLM no formato OpenAI SDK)
+# Recomenda-se usar o modelo qwen-plus da plataforma Alibaba Bailian: https://bailian.console.aliyun.com/
+# Atenção: o consumo é alto; tente simulações com menos de 40 rodadas primeiro
 LLM_API_KEY=your_api_key
 LLM_BASE_URL=https://dashscope.aliyuncs.com/compatible-mode/v1
 LLM_MODEL_NAME=qwen-plus
 
-# Zep Cloud 配置
-# 每月免费额度即可支撑简单使用：https://app.getzep.com/
+# Configuração do Zep Cloud
+# A cota gratuita mensal é suficiente para uso básico: https://app.getzep.com/
 ZEP_API_KEY=your_zep_api_key
 ```
 
-#### 2. 安装依赖
+#### 2. Instalar Dependências
 
 ```bash
-# 一键安装所有依赖（根目录 + 前端 + 后端）
+# Instalação com um clique de todas as dependências (raiz + frontend + backend)
 npm run setup:all
 ```
 
-或者分步安装：
+Ou instalar passo a passo:
 
 ```bash
-# 安装 Node 依赖（根目录 + 前端）
+# Instalar dependências Node (raiz + frontend)
 npm run setup
 
-# 安装 Python 依赖（后端，自动创建虚拟环境）
+# Instalar dependências Python (backend, cria ambiente virtual automaticamente)
 npm run setup:backend
 ```
 
-#### 3. 启动服务
+#### 3. Iniciar Serviços
 
 ```bash
-# 同时启动前后端（在项目根目录执行）
+# Iniciar frontend e backend simultaneamente (executar na raiz do projeto)
 npm run dev
 ```
 
-**服务地址：**
-- 前端：`http://localhost:3000`
-- 后端 API：`http://localhost:5001`
+**Endereços dos Serviços:**
+- Frontend: `http://localhost:3000`
+- Backend API: `http://localhost:5001`
 
-**单独启动：**
+**Iniciar Individualmente:**
 
 ```bash
-npm run backend   # 仅启动后端
-npm run frontend  # 仅启动前端
+npm run backend   # Iniciar apenas o backend
+npm run frontend  # Iniciar apenas o frontend
 ```
 
-### 二、Docker 部署
+### Opção 2: Implantação com Docker
 
 ```bash
-# 1. 配置环境变量（同源码部署）
+# 1. Configurar variáveis de ambiente (igual à implantação por código-fonte)
 cp .env.example .env
 
-# 2. 拉取镜像并启动
+# 2. Baixar imagem e iniciar
 docker compose up -d
 ```
 
-默认会读取根目录下的 `.env`，并映射端口 `3000（前端）/5001（后端）`
+Por padrão, lê o arquivo `.env` da raiz do projeto e mapeia as portas `3000 (frontend) / 5001 (backend)`
 
-> 在 `docker-compose.yml` 中已通过注释提供加速镜像地址，可按需替换
+> O endereço de imagem espelhada para download mais rápido está disponível como comentário em `docker-compose.yml`; substitua conforme necessário
 
-## 📬 更多交流
+## 📬 Entre em Contato
 
 <div align="center">
-<img src="./static/image/QQ群.png" alt="QQ交流群" width="60%"/>
+<img src="./static/image/QQ群.png" alt="Grupo QQ" width="60%"/>
 </div>
 
 &nbsp;
 
-MiroFish团队长期招募全职/实习，如果你对多Agent应用感兴趣，欢迎投递简历至：**mirofish@shanda.com**
+A equipe MiroFish está recrutando posições em tempo integral e estágio. Se você tem interesse em aplicações de múltiplos agentes, sinta-se à vontade para enviar seu currículo para: **mirofish@shanda.com**
 
-## 📄 致谢
+## 📄 Agradecimentos
 
-**MiroFish 得到了盛大集团的战略支持和孵化！**
+**MiroFish recebeu suporte estratégico e incubação do Grupo Shanda!**
 
-MiroFish 的仿真引擎由 **[OASIS](https://github.com/camel-ai/oasis)** 驱动，我们衷心感谢 CAMEL-AI 团队的开源贡献！
+O motor de simulação do MiroFish é impulsionado pelo **[OASIS](https://github.com/camel-ai/oasis)**. Agradecemos sinceramente à equipe CAMEL-AI por suas contribuições de código aberto!
 
-## 📈 项目统计
+## 📈 Estatísticas do Projeto
 
 <a href="https://www.star-history.com/#666ghj/MiroFish&type=date&legend=top-left">
  <picture>
