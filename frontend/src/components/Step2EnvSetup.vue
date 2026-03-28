@@ -544,65 +544,65 @@
         </div>
         
         <div class="modal-body">
-          <!-- 基本信息 -->
+          <!-- Informações Básicas -->
           <div class="modal-info-grid">
             <div class="info-item">
-              <span class="info-label">事件外显年龄</span>
-              <span class="info-value">{{ selectedProfile.age || '-' }} 岁</span>
+              <span class="info-label">Idade Aparente no Evento</span>
+              <span class="info-value">{{ selectedProfile.age || '-' }} anos</span>
             </div>
             <div class="info-item">
-              <span class="info-label">事件外显性别</span>
-              <span class="info-value">{{ { male: '男', female: '女', other: '其他' }[selectedProfile.gender] || selectedProfile.gender }}</span>
+              <span class="info-label">Gênero Aparente no Evento</span>
+              <span class="info-value">{{ { male: 'Masculino', female: 'Feminino', other: 'Outro' }[selectedProfile.gender] || selectedProfile.gender }}</span>
             </div>
             <div class="info-item">
-              <span class="info-label">国家/地区</span>
+              <span class="info-label">País/Região</span>
               <span class="info-value">{{ selectedProfile.country || '-' }}</span>
             </div>
             <div class="info-item">
-              <span class="info-label">事件外显MBTI</span>
+              <span class="info-label">MBTI Aparente no Evento</span>
               <span class="info-value mbti">{{ selectedProfile.mbti || '-' }}</span>
             </div>
           </div>
 
-          <!-- 简介 -->
+          <!-- Descrição -->
           <div class="modal-section">
-            <span class="section-label">人设简介</span>
-            <p class="section-bio">{{ selectedProfile.bio || '暂无简介' }}</p>
+            <span class="section-label">Descrição da Persona</span>
+            <p class="section-bio">{{ selectedProfile.bio || 'Sem descrição' }}</p>
           </div>
 
-          <!-- 关注话题 -->
+          <!-- Tópicos de Interesse -->
           <div class="modal-section" v-if="selectedProfile.interested_topics?.length">
-            <span class="section-label">现实种子关联话题</span>
+            <span class="section-label">Tópicos Associados às Sementes da Realidade</span>
             <div class="topics-grid">
-              <span 
-                v-for="topic in selectedProfile.interested_topics" 
-                :key="topic" 
+              <span
+                v-for="topic in selectedProfile.interested_topics"
+                :key="topic"
                 class="topic-item"
               >{{ topic }}</span>
             </div>
           </div>
 
-          <!-- 详细人设 -->
+          <!-- Persona Detalhada -->
           <div class="modal-section" v-if="selectedProfile.persona">
-            <span class="section-label">详细人设背景</span>
-            
-            <!-- 人设维度概览 -->
+            <span class="section-label">Histórico Detalhado da Persona</span>
+
+            <!-- Visão Geral das Dimensões da Persona -->
             <div class="persona-dimensions">
               <div class="dimension-card">
-                <span class="dim-title">事件全景经历</span>
-                <span class="dim-desc">在此事件中的完整行为轨迹</span>
+                <span class="dim-title">Experiência Panorâmica no Evento</span>
+                <span class="dim-desc">Trajetória comportamental completa neste evento</span>
               </div>
               <div class="dimension-card">
-                <span class="dim-title">行为模式侧写</span>
-                <span class="dim-desc">经验总结与行事风格偏好</span>
+                <span class="dim-title">Perfil de Padrão Comportamental</span>
+                <span class="dim-desc">Síntese de experiências e preferências de estilo de ação</span>
               </div>
               <div class="dimension-card">
-                <span class="dim-title">独特记忆印记</span>
-                <span class="dim-desc">基于现实种子形成的记忆</span>
+                <span class="dim-title">Marcas de Memória Únicas</span>
+                <span class="dim-desc">Memórias formadas com base nas sementes da realidade</span>
               </div>
               <div class="dimension-card">
-                <span class="dim-title">社会关系网络</span>
-                <span class="dim-desc">个体链接与交互图谱</span>
+                <span class="dim-title">Rede de Relações Sociais</span>
+                <span class="dim-desc">Grafo de vínculos e interações individuais</span>
               </div>
             </div>
 
@@ -651,7 +651,7 @@ const props = defineProps({
 const emit = defineEmits(['go-back', 'next-step', 'add-log', 'update-status'])
 
 // State
-const phase = ref(0) // 0: 初始化, 1: 生成人设, 2: 生成配置, 3: 完成
+const phase = ref(0) // 0: inicializando, 1: gerando personas, 2: gerando configuração, 3: concluído
 const taskId = ref(null)
 const prepareProgress = ref(0)
 const currentStage = ref('')
@@ -663,7 +663,7 @@ const simulationConfig = ref(null)
 const selectedProfile = ref(null)
 const showProfilesDetail = ref(true)
 
-// 日志去重：记录上一次输出的关键信息
+// Deduplicação de logs: registra a última mensagem-chave emitida
 let lastLoggedMessage = ''
 let lastLoggedProfileCount = 0
 let lastLoggedConfigStage = ''

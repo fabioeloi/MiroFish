@@ -520,18 +520,18 @@ const initObserver = () => {
     {
       // Usa múltiplos limiares para tornar a detecção mais suave
       threshold: [0.4, 0.6, 0.8],
-      // 调整 rootMargin，视口底部向上收缩，需要滚动更多才触发展开
+      // Ajusta rootMargin: a parte inferior da viewport recua para cima, exigindo mais rolagem para acionar a expansão
       rootMargin: '0px 0px -150px 0px'
     }
   )
   
-  // 开始观察
+  // Inicia a observação
   if (historyContainer.value) {
     observer.observe(historyContainer.value)
   }
 }
 
-// 监听路由变化，当返回首页时重新加载数据
+// Observa mudanças de rota e recarrega os dados ao retornar à página inicial
 watch(() => route.path, (newPath) => {
   if (newPath === '/') {
     loadHistory()

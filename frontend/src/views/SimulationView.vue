@@ -184,54 +184,54 @@ const checkAndStopRunningSimulation = async () => {
     const envStatusRes = await getEnvStatus({ simulation_id: currentSimulationId.value })
     
     if (envStatusRes.success && envStatusRes.data?.env_alive) {
-      addLog('检测到模拟环境正在运行，正在关闭...')
-      
-      // 尝试优雅关闭模拟环境
+      addLog('Ambiente de simulação detectado em execução, encerrando...')
+
+      // Tentar fechar o ambiente de simulação graciosamente
       try {
-        const closeRes = await closeSimulationEnv({ 
+        const closeRes = await closeSimulationEnv({
           simulation_id: currentSimulationId.value,
-          timeout: 10  // 10秒超时
+          timeout: 10  // 10 segundos de timeout
         })
-        
+
         if (closeRes.success) {
-          addLog('✓ 模拟环境已关闭')
+          addLog('✓ Ambiente de simulação encerrado')
         } else {
-          addLog(`关闭模拟环境失败: ${closeRes.error || '未知错误'}`)
-          // 如果优雅关闭失败，尝试强制停止
+          addLog(`Falha ao encerrar ambiente de simulação: ${closeRes.error || 'Erro desconhecido'}`)
+          // Se o encerramento gracioso falhar, tentar parada forçada
           await forceStopSimulation()
         }
       } catch (closeErr) {
-        addLog(`关闭模拟环境异常: ${closeErr.message}`)
-        // 如果优雅关闭异常，尝试强制停止
+        addLog(`Exceção ao encerrar ambiente de simulação: ${closeErr.message}`)
+        // Se o encerramento gracioso lançar exceção, tentar parada forçada
         await forceStopSimulation()
       }
     } else {
-      // 环境未运行，但可能进程还在，检查模拟状态
+      // Ambiente não está em execução, mas o processo pode ainda estar ativo; verificar status da simulação
       const simRes = await getSimulation(currentSimulationId.value)
       if (simRes.success && simRes.data?.status === 'running') {
-        addLog('检测到模拟状态为运行中，正在停止...')
+        addLog('Status da simulação detectado como em execução, parando...')
         await forceStopSimulation()
       }
     }
   } catch (err) {
-    // 检查环境状态失败不影响后续流程
-    console.warn('检查模拟状态失败:', err)
+    // Falha ao verificar status do ambiente não afeta o fluxo seguinte
+    console.warn('Falha ao verificar status da simulação:', err)
   }
 }
 
 /**
- * 强制停止模拟
+ * Parar simulação forçadamente
  */
 const forceStopSimulation = async () => {
   try {
     const stopRes = await stopSimulation({ simulation_id: currentSimulationId.value })
     if (stopRes.success) {
-      addLog('✓ 模拟已强制停止')
+      addLog('✓ Simulação parada forçadamente')
     } else {
-      addLog(`强制停止模拟失败: ${stopRes.error || '未知错误'}`)
+      addLog(`Falha ao parar simulação forçadamente: ${stopRes.error || 'Erro desconhecido'}`)
     }
   } catch (err) {
-    addLog(`强制停止模拟异常: ${err.message}`)
+    addLog(`Exceção ao parar simulação forçadamente: ${err.message}`)
   }
 }
 

@@ -63,25 +63,25 @@ Bem-vindo ao nosso ambiente de demonstração online. Experimente uma simulaçã
 </table>
 </div>
 
-## 🎬 演示视频
+## 🎬 Vídeos de Demonstração
 
-### 1. 武汉大学舆情推演预测 + MiroFish项目讲解
+### 1. Simulação de Opinião Pública da Universidade de Wuhan + Apresentação do Projeto MiroFish
 
 <div align="center">
 <a href="https://www.bilibili.com/video/BV1VYBsBHEMY/" target="_blank"><img src="./static/image/武大模拟演示封面.png" alt="MiroFish Demo Video" width="75%"/></a>
 
-点击图片查看使用微舆BettaFish生成的《武大舆情报告》进行预测的完整演示视频
+Clique na imagem para assistir ao vídeo completo de demonstração de previsão usando o "Relatório de Opinião Pública da Universidade de Wuhan" gerado pelo BettaFish
 </div>
 
-### 2. 《红楼梦》失传结局推演预测
+### 2. Previsão do Final Perdido de "O Sonho do Pavilhão Vermelho"
 
 <div align="center">
 <a href="https://www.bilibili.com/video/BV1cPk3BBExq" target="_blank"><img src="./static/image/红楼梦模拟推演封面.jpg" alt="MiroFish Demo Video" width="75%"/></a>
 
-点击图片查看基于《红楼梦》前80回数十万字，MiroFish深度预测失传结局
+Clique na imagem para assistir à previsão profunda do MiroFish sobre o final perdido, baseado em centenas de milhares de caracteres dos primeiros 80 capítulos de "O Sonho do Pavilhão Vermelho"
 </div>
 
-> **金融方向推演预测**、**时政要闻推演预测**等示例陆续更新中...
+> **Previsões Financeiras**, **Previsões de Notícias Políticas** e mais exemplos em breve...
 
 ## 🔄 工作流程
 
