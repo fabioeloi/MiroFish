@@ -1902,7 +1902,7 @@ onUnmounted(() => {
   flex: 1;
 }
 
-/* 基本信息网格 */
+/* Grade de informações básicas */
 .modal-info-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
