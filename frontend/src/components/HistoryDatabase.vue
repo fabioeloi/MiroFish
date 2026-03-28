@@ -579,13 +579,13 @@ onUnmounted(() => {
   overflow: visible;
 }
 
-/* 无项目时简化显示 */
+/* Exibição simplificada sem projetos */
 .history-database.no-projects {
   min-height: auto;
   padding: 40px 0 20px;
 }
 
-/* 技术网格背景 */
+/* Fundo de grade técnica */
 .tech-grid-bg {
   position: absolute;
   top: 0;
@@ -596,7 +596,7 @@ onUnmounted(() => {
   pointer-events: none;
 }
 
-/* 使用CSS背景图案创建固定间距的正方形网格 */
+/* Usa padrão de fundo CSS para criar grade quadrada com espaçamento fixo */
 .grid-pattern {
   position: absolute;
   top: 0;
