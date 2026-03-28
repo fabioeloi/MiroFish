@@ -4,20 +4,20 @@
     :class="{ 'no-projects': projects.length === 0 && !loading }"
     ref="historyContainer"
   >
-    <!-- 背景装饰：技术网格线（只在有项目时显示） -->
+    <!-- Decoração de fundo: linhas de grade técnica (exibida apenas quando há projetos) -->
     <div v-if="projects.length > 0 || loading" class="tech-grid-bg">
       <div class="grid-pattern"></div>
       <div class="gradient-overlay"></div>
     </div>
 
-    <!-- 标题区域 -->
+    <!-- Área do título -->
     <div class="section-header">
       <div class="section-line"></div>
-      <span class="section-title">推演记录</span>
+      <span class="section-title">Histórico de Previsões</span>
       <div class="section-line"></div>
     </div>
 
-    <!-- 卡片容器（只在有项目时显示） -->
+    <!-- Contêiner de cartões (exibido apenas quando há projetos) -->
     <div v-if="projects.length > 0" class="cards-container" :class="{ expanded: isExpanded }" :style="containerStyle">
       <div 
         v-for="(project, index) in projects" 
@@ -29,61 +29,61 @@
         @mouseleave="hoveringCard = null"
         @click="navigateToProject(project)"
       >
-        <!-- 卡片头部：simulation_id 和 功能可用状态 -->
+        <!-- Cabeçalho do cartão: simulation_id e estado de disponibilidade das funcionalidades -->
         <div class="card-header">
           <span class="card-id">{{ formatSimulationId(project.simulation_id) }}</span>
           <div class="card-status-icons">
-            <span 
-              class="status-icon" 
+            <span
+              class="status-icon"
               :class="{ available: project.project_id, unavailable: !project.project_id }"
-              title="图谱构建"
+              title="Construção do Grafo"
             >◇</span>
-            <span 
-              class="status-icon available" 
-              title="环境搭建"
+            <span
+              class="status-icon available"
+              title="Configuração do Ambiente"
             >◈</span>
-            <span 
-              class="status-icon" 
+            <span
+              class="status-icon"
               :class="{ available: project.report_id, unavailable: !project.report_id }"
-              title="分析报告"
+              title="Relatório de Análise"
             >◆</span>
           </div>
         </div>
 
-        <!-- 文件列表区域 -->
+        <!-- Área da lista de arquivos -->
         <div class="card-files-wrapper">
-          <!-- 角落装饰 - 取景框风格 -->
+          <!-- Decoração de canto - estilo visor -->
           <div class="corner-mark top-left-only"></div>
-          
-          <!-- 文件列表 -->
+
+          <!-- Lista de arquivos -->
           <div class="files-list" v-if="project.files && project.files.length > 0">
-            <div 
-              v-for="(file, fileIndex) in project.files.slice(0, 3)" 
+            <div
+              v-for="(file, fileIndex) in project.files.slice(0, 3)"
               :key="fileIndex"
               class="file-item"
             >
               <span class="file-tag" :class="getFileType(file.filename)">{{ getFileTypeLabel(file.filename) }}</span>
               <span class="file-name">{{ truncateFilename(file.filename, 20) }}</span>
             </div>
-            <!-- 如果有更多文件，显示提示 -->
+            <!-- Se houver mais arquivos, exibir aviso -->
             <div v-if="project.files.length > 3" class="files-more">
-              +{{ project.files.length - 3 }} 个文件
+              +{{ project.files.length - 3 }} arquivos
             </div>
           </div>
-          <!-- 无文件时的占位 -->
+          <!-- Espaço reservado quando não há arquivos -->
           <div class="files-empty" v-else>
             <span class="empty-file-icon">◇</span>
-            <span class="empty-file-text">暂无文件</span>
+            <span class="empty-file-text">Nenhum arquivo</span>
           </div>
         </div>
 
-        <!-- 卡片标题（使用模拟需求的前20字作为标题） -->
+        <!-- Título do cartão (usa os primeiros 20 caracteres da necessidade de simulação) -->
         <h3 class="card-title">{{ getSimulationTitle(project.simulation_requirement) }}</h3>
 
-        <!-- 卡片描述（模拟需求完整展示） -->
+        <!-- Descrição do cartão (exibição completa da necessidade de simulação) -->
         <p class="card-desc">{{ truncateText(project.simulation_requirement, 55) }}</p>
 
-        <!-- 卡片底部 -->
+        <!-- Rodapé do cartão -->
         <div class="card-footer">
           <div class="card-datetime">
             <span class="card-date">{{ formatDate(project.created_at) }}</span>
@@ -94,23 +94,23 @@
           </span>
         </div>
         
-        <!-- 底部装饰线 (hover时展开) -->
+        <!-- Linha decorativa inferior (expande no hover) -->
         <div class="card-bottom-line"></div>
       </div>
     </div>
 
-    <!-- 加载状态 -->
+    <!-- Estado de carregamento -->
     <div v-if="loading" class="loading-state">
       <span class="loading-spinner"></span>
-      <span class="loading-text">加载中...</span>
+      <span class="loading-text">Carregando...</span>
     </div>
 
-    <!-- 历史回放详情弹窗 -->
+    <!-- Modal de detalhes do histórico de reprodução -->
     <Teleport to="body">
       <Transition name="modal">
         <div v-if="selectedProject" class="modal-overlay" @click.self="closeModal">
           <div class="modal-content">
-            <!-- 弹窗头部 -->
+            <!-- Cabeçalho do modal -->
             <div class="modal-header">
               <div class="modal-title-section">
                 <span class="modal-id">{{ formatSimulationId(selectedProject.simulation_id) }}</span>
@@ -122,66 +122,66 @@
               <button class="modal-close" @click="closeModal">×</button>
             </div>
 
-            <!-- 弹窗内容 -->
+            <!-- Conteúdo do modal -->
             <div class="modal-body">
-              <!-- 模拟需求 -->
+              <!-- Necessidade de simulação -->
               <div class="modal-section">
-                <div class="modal-label">模拟需求</div>
-                <div class="modal-requirement">{{ selectedProject.simulation_requirement || '无' }}</div>
+                <div class="modal-label">Necessidade de Simulação</div>
+                <div class="modal-requirement">{{ selectedProject.simulation_requirement || 'Nenhuma' }}</div>
               </div>
 
-              <!-- 文件列表 -->
+              <!-- Lista de arquivos -->
               <div class="modal-section">
-                <div class="modal-label">关联文件</div>
+                <div class="modal-label">Arquivos Associados</div>
                 <div class="modal-files" v-if="selectedProject.files && selectedProject.files.length > 0">
                   <div v-for="(file, index) in selectedProject.files" :key="index" class="modal-file-item">
                     <span class="file-tag" :class="getFileType(file.filename)">{{ getFileTypeLabel(file.filename) }}</span>
                     <span class="modal-file-name">{{ file.filename }}</span>
                   </div>
                 </div>
-                <div class="modal-empty" v-else>暂无关联文件</div>
+                <div class="modal-empty" v-else>Nenhum arquivo associado</div>
               </div>
             </div>
 
-            <!-- 推演回放分割线 -->
+            <!-- Divisor de reprodução de previsão -->
             <div class="modal-divider">
               <span class="divider-line"></span>
-              <span class="divider-text">推演回放</span>
+              <span class="divider-text">Reprodução de Previsão</span>
               <span class="divider-line"></span>
             </div>
 
-            <!-- 导航按钮 -->
+            <!-- Botões de navegação -->
             <div class="modal-actions">
-              <button 
-                class="modal-btn btn-project" 
+              <button
+                class="modal-btn btn-project"
                 @click="goToProject"
                 :disabled="!selectedProject.project_id"
               >
                 <span class="btn-step">Step1</span>
                 <span class="btn-icon">◇</span>
-                <span class="btn-text">图谱构建</span>
+                <span class="btn-text">Construção do Grafo</span>
               </button>
-              <button 
-                class="modal-btn btn-simulation" 
+              <button
+                class="modal-btn btn-simulation"
                 @click="goToSimulation"
               >
                 <span class="btn-step">Step2</span>
                 <span class="btn-icon">◈</span>
-                <span class="btn-text">环境搭建</span>
+                <span class="btn-text">Configuração do Ambiente</span>
               </button>
-              <button 
-                class="modal-btn btn-report" 
+              <button
+                class="modal-btn btn-report"
                 @click="goToReport"
                 :disabled="!selectedProject.report_id"
               >
                 <span class="btn-step">Step4</span>
                 <span class="btn-icon">◆</span>
-                <span class="btn-text">分析报告</span>
+                <span class="btn-text">Relatório de Análise</span>
               </button>
             </div>
-            <!-- 不可回放提示 -->
+            <!-- Aviso de não reproduzível -->
             <div class="modal-playback-hint">
-              <span class="hint-text">Step3「开始模拟」与 Step5「深度互动」需在运行中启动，不支持历史回放</span>
+              <span class="hint-text">Step3 "Iniciar Simulação" e Step5 "Interação Profunda" precisam ser iniciados durante a execução e não suportam reprodução do histórico</span>
             </div>
           </div>
         </div>
@@ -198,66 +198,66 @@ import { getSimulationHistory } from '../api/simulation'
 const router = useRouter()
 const route = useRoute()
 
-// 状态
+// Estado
 const projects = ref([])
 const loading = ref(true)
 const isExpanded = ref(false)
 const hoveringCard = ref(null)
 const historyContainer = ref(null)
-const selectedProject = ref(null)  // 当前选中的项目（用于弹窗）
+const selectedProject = ref(null)  // Projeto atualmente selecionado (para o modal)
 let observer = null
-let isAnimating = false  // 动画锁，防止闪烁
-let expandDebounceTimer = null  // 防抖定时器
-let pendingState = null  // 记录待执行的目标状态
+let isAnimating = false  // Bloqueio de animação para evitar oscilação
+let expandDebounceTimer = null  // Timer de debounce
+let pendingState = null  // Registra o estado-alvo pendente de execução
 
-// 卡片布局配置 - 调整为更宽的比例
+// Configuração de layout dos cartões - ajustado para proporção mais larga
 const CARDS_PER_ROW = 4
 const CARD_WIDTH = 280  
 const CARD_HEIGHT = 280 
 const CARD_GAP = 24
 
-// 动态计算容器高度样式
+// Calcula dinamicamente o estilo de altura do contêiner
 const containerStyle = computed(() => {
   if (!isExpanded.value) {
-    // 折叠态：固定高度
+    // Estado recolhido: altura fixa
     return { minHeight: '420px' }
   }
-  
-  // 展开态：根据卡片数量动态计算高度
+
+  // Estado expandido: calcula altura dinamicamente com base na quantidade de cartões
   const total = projects.value.length
   if (total === 0) {
     return { minHeight: '280px' }
   }
-  
+
   const rows = Math.ceil(total / CARDS_PER_ROW)
-  // 计算实际需要的高度：行数 * 卡片高度 + (行数-1) * 间距 + 少量底部间距
+  // Calcula a altura necessária: linhas * altura do cartão + (linhas-1) * espaçamento + pequena margem inferior
   const expandedHeight = rows * CARD_HEIGHT + (rows - 1) * CARD_GAP + 10
-  
+
   return { minHeight: `${expandedHeight}px` }
 })
 
-// 获取卡片样式
+// Obtém o estilo do cartão
 const getCardStyle = (index) => {
   const total = projects.value.length
-  
+
   if (isExpanded.value) {
-    // 展开态：网格布局
+    // Estado expandido: layout em grade
     const transition = 'transform 700ms cubic-bezier(0.23, 1, 0.32, 1), opacity 700ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease, border-color 0.3s ease'
 
     const col = index % CARDS_PER_ROW
     const row = Math.floor(index / CARDS_PER_ROW)
-    
-    // 计算当前行的卡片数量，确保每行居中
+
+    // Calcula a quantidade de cartões na linha atual para garantir centralização
     const currentRowStart = row * CARDS_PER_ROW
     const currentRowCards = Math.min(CARDS_PER_ROW, total - currentRowStart)
-    
+
     const rowWidth = currentRowCards * CARD_WIDTH + (currentRowCards - 1) * CARD_GAP
-    
+
     const startX = -(rowWidth / 2) + (CARD_WIDTH / 2)
     const colInRow = index % CARDS_PER_ROW
     const x = startX + colInRow * (CARD_WIDTH + CARD_GAP)
-    
-    // 向下展开，增加与标题的间距
+
+    // Expande para baixo, aumentando o espaçamento em relação ao título
     const y = 20 + row * (CARD_HEIGHT + CARD_GAP)
 
     return {
@@ -267,18 +267,18 @@ const getCardStyle = (index) => {
       transition: transition
     }
   } else {
-    // 折叠态：扇形堆叠
+    // Estado recolhido: empilhamento em leque
     const transition = 'transform 700ms cubic-bezier(0.23, 1, 0.32, 1), opacity 700ms cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease, border-color 0.3s ease'
 
     const centerIndex = (total - 1) / 2
     const offset = index - centerIndex
-    
+
     const x = offset * 35
-    // 调整起始位置，靠近标题但保持适当间距
+    // Ajusta a posição inicial, próximo ao título mas mantendo espaçamento adequado
     const y = 25 + Math.abs(offset) * 8
     const r = offset * 3
     const s = 0.95 - Math.abs(offset) * 0.05
-    
+
     return {
       transform: `translate(${x}px, ${y}px) rotate(${r}deg) scale(${s})`,
       zIndex: 10 + index,
@@ -288,24 +288,24 @@ const getCardStyle = (index) => {
   }
 }
 
-// 根据轮数进度获取样式类
+// Obtém a classe de estilo com base no progresso de rodadas
 const getProgressClass = (simulation) => {
   const current = simulation.current_round || 0
   const total = simulation.total_rounds || 0
-  
+
   if (total === 0 || current === 0) {
-    // 未开始
+    // Não iniciado
     return 'not-started'
   } else if (current >= total) {
-    // 已完成
+    // Concluído
     return 'completed'
   } else {
-    // 进行中
+    // Em andamento
     return 'in-progress'
   }
 }
 
-// 格式化日期（只显示日期部分）
+// Formata a data (exibe apenas a parte da data)
 const formatDate = (dateStr) => {
   if (!dateStr) return ''
   try {
@@ -316,7 +316,7 @@ const formatDate = (dateStr) => {
   }
 }
 
-// 格式化时间（显示时:分）
+// Formata o horário (exibe horas:minutos)
 const formatTime = (dateStr) => {
   if (!dateStr) return ''
   try {
@@ -329,35 +329,35 @@ const formatTime = (dateStr) => {
   }
 }
 
-// 截断文本
+// Trunca o texto
 const truncateText = (text, maxLength) => {
   if (!text) return ''
   return text.length > maxLength ? text.slice(0, maxLength) + '...' : text
 }
 
-// 从模拟需求生成标题（取前20字）
+// Gera o título a partir do requisito de simulação (primeiros 20 caracteres)
 const getSimulationTitle = (requirement) => {
-  if (!requirement) return '未命名模拟'
+  if (!requirement) return 'Simulação sem nome'
   const title = requirement.slice(0, 20)
   return requirement.length > 20 ? title + '...' : title
 }
 
-// 格式化 simulation_id 显示（截取前6位）
+// Formata a exibição do simulation_id (primeiros 6 caracteres)
 const formatSimulationId = (simulationId) => {
   if (!simulationId) return 'SIM_UNKNOWN'
   const prefix = simulationId.replace('sim_', '').slice(0, 6)
   return `SIM_${prefix.toUpperCase()}`
 }
 
-// 格式化轮数显示（当前轮/总轮数）
+// Formata a exibição de rodadas (rodada atual/total de rodadas)
 const formatRounds = (simulation) => {
   const current = simulation.current_round || 0
   const total = simulation.total_rounds || 0
-  if (total === 0) return '未开始'
-  return `${current}/${total} 轮`
+  if (total === 0) return 'Não iniciado'
+  return `${current}/${total} rodadas`
 }
 
-// 获取文件类型（用于样式）
+// Obtém o tipo de arquivo (para estilo)
 const getFileType = (filename) => {
   if (!filename) return 'other'
   const ext = filename.split('.').pop()?.toLowerCase()
@@ -373,16 +373,16 @@ const getFileType = (filename) => {
   return typeMap[ext] || 'other'
 }
 
-// 获取文件类型标签文本
+// Obtém o texto da etiqueta de tipo de arquivo
 const getFileTypeLabel = (filename) => {
   if (!filename) return 'FILE'
   const ext = filename.split('.').pop()?.toUpperCase()
   return ext || 'FILE'
 }
 
-// 截断文件名（保留扩展名）
+// Trunca o nome do arquivo (preservando a extensão)
 const truncateFilename = (filename, maxLength) => {
-  if (!filename) return '未知文件'
+  if (!filename) return 'Arquivo desconhecido'
   if (filename.length <= maxLength) return filename
   
   const ext = filename.includes('.') ? '.' + filename.split('.').pop() : ''
@@ -391,17 +391,17 @@ const truncateFilename = (filename, maxLength) => {
   return truncatedName + ext
 }
 
-// 打开项目详情弹窗
+// Abre o modal de detalhes do projeto
 const navigateToProject = (simulation) => {
   selectedProject.value = simulation
 }
 
-// 关闭弹窗
+// Fecha o modal
 const closeModal = () => {
   selectedProject.value = null
 }
 
-// 导航到图谱构建页面（Project）
+// Navega para a página de Construção do Grafo (Project)
 const goToProject = () => {
   if (selectedProject.value?.project_id) {
     router.push({
@@ -412,7 +412,7 @@ const goToProject = () => {
   }
 }
 
-// 导航到环境配置页面（Simulation）
+// Navega para a página de Configuração do Ambiente (Simulation)
 const goToSimulation = () => {
   if (selectedProject.value?.simulation_id) {
     router.push({
@@ -423,7 +423,7 @@ const goToSimulation = () => {
   }
 }
 
-// 导航到分析报告页面（Report）
+// Navega para a página de Relatório de Análise (Report)
 const goToReport = () => {
   if (selectedProject.value?.report_id) {
     router.push({
@@ -434,7 +434,7 @@ const goToReport = () => {
   }
 }
 
-// 加载历史项目
+// Carrega projetos do histórico
 const loadHistory = async () => {
   try {
     loading.value = true
@@ -443,7 +443,7 @@ const loadHistory = async () => {
       projects.value = response.data || []
     }
   } catch (error) {
-    console.error('加载历史项目失败:', error)
+    console.error('Falha ao carregar projetos do histórico:', error)
     projects.value = []
   } finally {
     loading.value = false

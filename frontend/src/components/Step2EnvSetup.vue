@@ -1,23 +1,23 @@
 <template>
   <div class="env-setup-panel">
     <div class="scroll-container">
-      <!-- Step 01: 模拟实例 -->
+      <!-- Step 01: Instância de Simulação -->
       <div class="step-card" :class="{ 'active': phase === 0, 'completed': phase > 0 }">
         <div class="card-header">
           <div class="step-info">
             <span class="step-num">01</span>
-            <span class="step-title">模拟实例初始化</span>
+            <span class="step-title">Inicialização da Instância de Simulação</span>
           </div>
           <div class="step-status">
-            <span v-if="phase > 0" class="badge success">已完成</span>
-            <span v-else class="badge processing">初始化</span>
+            <span v-if="phase > 0" class="badge success">Concluído</span>
+            <span v-else class="badge processing">Inicializando</span>
           </div>
         </div>
         
         <div class="card-content">
           <p class="api-note">POST /api/simulation/create</p>
           <p class="description">
-            新建simulation实例，拉取模拟世界参数模版
+            Criação de nova instância de simulação, carregando templates de parâmetros do mundo simulado
           </p>
 
           <div v-if="simulationId" class="info-card">
@@ -35,52 +35,52 @@
             </div>
             <div class="info-row">
               <span class="info-label">Task ID</span>
-              <span class="info-value mono">{{ taskId || '异步任务已完成' }}</span>
+              <span class="info-value mono">{{ taskId || 'Tarefa assíncrona concluída' }}</span>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Step 02: 生成 Agent 人设 -->
+      <!-- Step 02: Personas de Agentes -->
       <div class="step-card" :class="{ 'active': phase === 1, 'completed': phase > 1 }">
         <div class="card-header">
           <div class="step-info">
             <span class="step-num">02</span>
-            <span class="step-title">生成 Agent 人设</span>
+            <span class="step-title">Gerar Personas de Agentes</span>
           </div>
           <div class="step-status">
-            <span v-if="phase > 1" class="badge success">已完成</span>
+            <span v-if="phase > 1" class="badge success">Concluído</span>
             <span v-else-if="phase === 1" class="badge processing">{{ prepareProgress }}%</span>
-            <span v-else class="badge pending">等待</span>
+            <span v-else class="badge pending">Aguardando</span>
           </div>
         </div>
 
         <div class="card-content">
           <p class="api-note">POST /api/simulation/prepare</p>
           <p class="description">
-            结合上下文，自动调用工具从知识图谱梳理实体与关系，初始化模拟个体，并基于现实种子赋予他们独特的行为与记忆
+            Combinando o contexto, ferramentas são chamadas automaticamente para mapear entidades e relações do grafo de conhecimento, inicializar indivíduos de simulação e dotá-los de comportamentos e memórias únicas com base nas sementes da realidade
           </p>
 
           <!-- Profiles Stats -->
           <div v-if="profiles.length > 0" class="stats-grid">
             <div class="stat-card">
               <span class="stat-value">{{ profiles.length }}</span>
-              <span class="stat-label">当前Agent数</span>
+              <span class="stat-label">Total de Agentes Atual</span>
             </div>
             <div class="stat-card">
               <span class="stat-value">{{ expectedTotal || '-' }}</span>
-              <span class="stat-label">预期Agent总数</span>
+              <span class="stat-label">Total de Agentes Esperado</span>
             </div>
             <div class="stat-card">
               <span class="stat-value">{{ totalTopicsCount }}</span>
-              <span class="stat-label">现实种子当前关联话题数</span>
+              <span class="stat-label">Tópicos Associados às Sementes da Realidade</span>
             </div>
           </div>
 
           <!-- Profiles List Preview -->
           <div v-if="profiles.length > 0" class="profiles-preview">
             <div class="preview-header">
-              <span class="preview-title">已生成的 Agent 人设</span>
+              <span class="preview-title">Personas de Agentes Geradas</span>
             </div>
             <div class="profiles-list">
               <div 
@@ -94,9 +94,9 @@
                   <span class="profile-username">@{{ profile.name || `agent_${idx}` }}</span>
                 </div>
                 <div class="profile-meta">
-                  <span class="profile-profession">{{ profile.profession || '未知职业' }}</span>
+                  <span class="profile-profession">{{ profile.profession || 'Profissão Desconhecida' }}</span>
                 </div>
-                <p class="profile-bio">{{ profile.bio || '暂无简介' }}</p>
+                <p class="profile-bio">{{ profile.bio || 'Sem descrição' }}</p>
                 <div v-if="profile.interested_topics?.length" class="profile-topics">
                   <span 
                     v-for="topic in profile.interested_topics.slice(0, 3)" 
@@ -113,24 +113,24 @@
         </div>
       </div>
 
-      <!-- Step 03: 生成双平台模拟配置 -->
+      <!-- Step 03: Gerar Configuração de Simulação Dupla Plataforma -->
       <div class="step-card" :class="{ 'active': phase === 2, 'completed': phase > 2 }">
         <div class="card-header">
           <div class="step-info">
             <span class="step-num">03</span>
-            <span class="step-title">生成双平台模拟配置</span>
+            <span class="step-title">Gerar Configuração de Simulação Dupla Plataforma</span>
           </div>
           <div class="step-status">
-            <span v-if="phase > 2" class="badge success">已完成</span>
-            <span v-else-if="phase === 2" class="badge processing">生成中</span>
-            <span v-else class="badge pending">等待</span>
+            <span v-if="phase > 2" class="badge success">Concluído</span>
+            <span v-else-if="phase === 2" class="badge processing">Gerando</span>
+            <span v-else class="badge pending">Aguardando</span>
           </div>
         </div>
 
         <div class="card-content">
           <p class="api-note">POST /api/simulation/prepare</p>
           <p class="description">
-            LLM 根据模拟需求与现实种子，智能设置世界时间流速、推荐算法、每个个体的活跃时间段、发言频率、事件触发等参数
+            O LLM define de forma inteligente a velocidade do tempo do mundo, algoritmos de recomendação, períodos de atividade de cada indivíduo, frequência de postagens, acionamento de eventos e outros parâmetros com base nos requisitos de simulação e nas sementes da realidade
           </p>
           
           <!-- Config Preview -->
@@ -139,51 +139,51 @@
             <div class="config-block">
               <div class="config-grid">
                 <div class="config-item">
-                  <span class="config-item-label">模拟时长</span>
-                  <span class="config-item-value">{{ simulationConfig.time_config?.total_simulation_hours || '-' }} 小时</span>
+                  <span class="config-item-label">Duração da Simulação</span>
+                  <span class="config-item-value">{{ simulationConfig.time_config?.total_simulation_hours || '-' }} horas</span>
                 </div>
                 <div class="config-item">
-                  <span class="config-item-label">每轮时长</span>
-                  <span class="config-item-value">{{ simulationConfig.time_config?.minutes_per_round || '-' }} 分钟</span>
+                  <span class="config-item-label">Duração por Rodada</span>
+                  <span class="config-item-value">{{ simulationConfig.time_config?.minutes_per_round || '-' }} minutos</span>
                 </div>
                 <div class="config-item">
-                  <span class="config-item-label">总轮次</span>
-                  <span class="config-item-value">{{ Math.floor((simulationConfig.time_config?.total_simulation_hours * 60 / simulationConfig.time_config?.minutes_per_round)) || '-' }} 轮</span>
+                  <span class="config-item-label">Total de Rodadas</span>
+                  <span class="config-item-value">{{ Math.floor((simulationConfig.time_config?.total_simulation_hours * 60 / simulationConfig.time_config?.minutes_per_round)) || '-' }} rodadas</span>
                 </div>
                 <div class="config-item">
-                  <span class="config-item-label">每小时活跃</span>
+                  <span class="config-item-label">Ativos por Hora</span>
                   <span class="config-item-value">{{ simulationConfig.time_config?.agents_per_hour_min }}-{{ simulationConfig.time_config?.agents_per_hour_max }}</span>
                 </div>
               </div>
               <div class="time-periods">
                 <div class="period-item">
-                  <span class="period-label">高峰时段</span>
+                  <span class="period-label">Horário de Pico</span>
                   <span class="period-hours">{{ simulationConfig.time_config?.peak_hours?.join(':00, ') }}:00</span>
                   <span class="period-multiplier">×{{ simulationConfig.time_config?.peak_activity_multiplier }}</span>
                 </div>
                 <div class="period-item">
-                  <span class="period-label">工作时段</span>
+                  <span class="period-label">Horário de Trabalho</span>
                   <span class="period-hours">{{ simulationConfig.time_config?.work_hours?.[0] }}:00-{{ simulationConfig.time_config?.work_hours?.slice(-1)[0] }}:00</span>
                   <span class="period-multiplier">×{{ simulationConfig.time_config?.work_activity_multiplier }}</span>
                 </div>
                 <div class="period-item">
-                  <span class="period-label">早间时段</span>
+                  <span class="period-label">Horário Matutino</span>
                   <span class="period-hours">{{ simulationConfig.time_config?.morning_hours?.[0] }}:00-{{ simulationConfig.time_config?.morning_hours?.slice(-1)[0] }}:00</span>
                   <span class="period-multiplier">×{{ simulationConfig.time_config?.morning_activity_multiplier }}</span>
                 </div>
                 <div class="period-item">
-                  <span class="period-label">低谷时段</span>
+                  <span class="period-label">Horário de Vale</span>
                   <span class="period-hours">{{ simulationConfig.time_config?.off_peak_hours?.[0] }}:00-{{ simulationConfig.time_config?.off_peak_hours?.slice(-1)[0] }}:00</span>
                   <span class="period-multiplier">×{{ simulationConfig.time_config?.off_peak_activity_multiplier }}</span>
                 </div>
               </div>
             </div>
 
-            <!-- Agent 配置 -->
+            <!-- Configuração de Agentes -->
             <div class="config-block">
               <div class="config-block-header">
-                <span class="config-block-title">Agent 配置</span>
-                <span class="config-block-badge">{{ simulationConfig.agent_configs?.length || 0 }} 个</span>
+                <span class="config-block-title">Configuração de Agentes</span>
+                <span class="config-block-badge">{{ simulationConfig.agent_configs?.length || 0 }}</span>
               </div>
               <div class="agents-cards">
                 <div 
@@ -203,9 +203,9 @@
                     </div>
                   </div>
                   
-                  <!-- 活跃时间轴 -->
+                  <!-- Linha do Tempo de Atividade -->
                   <div class="agent-timeline">
-                    <span class="timeline-label">活跃时段</span>
+                    <span class="timeline-label">Períodos Ativos</span>
                     <div class="mini-timeline">
                       <div 
                         v-for="hour in 24" 
@@ -224,38 +224,38 @@
                     </div>
                   </div>
 
-                  <!-- 行为参数 -->
+                  <!-- Parâmetros de Comportamento -->
                   <div class="agent-params">
                     <div class="param-group">
                       <div class="param-item">
-                        <span class="param-label">发帖/时</span>
+                        <span class="param-label">Posts/hora</span>
                         <span class="param-value">{{ agent.posts_per_hour }}</span>
                       </div>
                       <div class="param-item">
-                        <span class="param-label">评论/时</span>
+                        <span class="param-label">Comentários/hora</span>
                         <span class="param-value">{{ agent.comments_per_hour }}</span>
                       </div>
                       <div class="param-item">
-                        <span class="param-label">响应延迟</span>
+                        <span class="param-label">Atraso de Resposta</span>
                         <span class="param-value">{{ agent.response_delay_min }}-{{ agent.response_delay_max }}min</span>
                       </div>
                     </div>
                     <div class="param-group">
                       <div class="param-item">
-                        <span class="param-label">活跃度</span>
+                        <span class="param-label">Nível de Atividade</span>
                         <span class="param-value with-bar">
                           <span class="mini-bar" :style="{ width: (agent.activity_level * 100) + '%' }"></span>
                           {{ (agent.activity_level * 100).toFixed(0) }}%
                         </span>
                       </div>
                       <div class="param-item">
-                        <span class="param-label">情感倾向</span>
+                        <span class="param-label">Tendência Emocional</span>
                         <span class="param-value" :class="agent.sentiment_bias > 0 ? 'positive' : agent.sentiment_bias < 0 ? 'negative' : 'neutral'">
                           {{ agent.sentiment_bias > 0 ? '+' : '' }}{{ agent.sentiment_bias?.toFixed(1) }}
                         </span>
                       </div>
                       <div class="param-item">
-                        <span class="param-label">影响力</span>
+                        <span class="param-label">Influência</span>
                         <span class="param-value highlight">{{ agent.influence_weight?.toFixed(1) }}</span>
                       </div>
                     </div>
@@ -264,62 +264,62 @@
               </div>
             </div>
 
-            <!-- 平台配置 -->
+            <!-- Configuração de Plataformas -->
             <div class="config-block">
               <div class="config-block-header">
-                <span class="config-block-title">推荐算法配置</span>
+                <span class="config-block-title">Configuração de Algoritmos de Recomendação</span>
               </div>
               <div class="platforms-grid">
                 <div v-if="simulationConfig.twitter_config" class="platform-card">
                   <div class="platform-card-header">
-                    <span class="platform-name">平台 1：广场 / 信息流</span>
+                    <span class="platform-name">Plataforma 1: Praça / Feed</span>
                   </div>
                   <div class="platform-params">
                     <div class="param-row">
-                      <span class="param-label">时效权重</span>
+                      <span class="param-label">Peso de Recência</span>
                       <span class="param-value">{{ simulationConfig.twitter_config.recency_weight }}</span>
                     </div>
                     <div class="param-row">
-                      <span class="param-label">热度权重</span>
+                      <span class="param-label">Peso de Popularidade</span>
                       <span class="param-value">{{ simulationConfig.twitter_config.popularity_weight }}</span>
                     </div>
                     <div class="param-row">
-                      <span class="param-label">相关性权重</span>
+                      <span class="param-label">Peso de Relevância</span>
                       <span class="param-value">{{ simulationConfig.twitter_config.relevance_weight }}</span>
                     </div>
                     <div class="param-row">
-                      <span class="param-label">病毒阈值</span>
+                      <span class="param-label">Limiar Viral</span>
                       <span class="param-value">{{ simulationConfig.twitter_config.viral_threshold }}</span>
                     </div>
                     <div class="param-row">
-                      <span class="param-label">回音室强度</span>
+                      <span class="param-label">Intensidade da Câmara de Eco</span>
                       <span class="param-value">{{ simulationConfig.twitter_config.echo_chamber_strength }}</span>
                     </div>
                   </div>
                 </div>
                 <div v-if="simulationConfig.reddit_config" class="platform-card">
                   <div class="platform-card-header">
-                    <span class="platform-name">平台 2：话题 / 社区</span>
+                    <span class="platform-name">Plataforma 2: Tópicos / Comunidade</span>
                   </div>
                   <div class="platform-params">
                     <div class="param-row">
-                      <span class="param-label">时效权重</span>
+                      <span class="param-label">Peso de Recência</span>
                       <span class="param-value">{{ simulationConfig.reddit_config.recency_weight }}</span>
                     </div>
                     <div class="param-row">
-                      <span class="param-label">热度权重</span>
+                      <span class="param-label">Peso de Popularidade</span>
                       <span class="param-value">{{ simulationConfig.reddit_config.popularity_weight }}</span>
                     </div>
                     <div class="param-row">
-                      <span class="param-label">相关性权重</span>
+                      <span class="param-label">Peso de Relevância</span>
                       <span class="param-value">{{ simulationConfig.reddit_config.relevance_weight }}</span>
                     </div>
                     <div class="param-row">
-                      <span class="param-label">病毒阈值</span>
+                      <span class="param-label">Limiar Viral</span>
                       <span class="param-value">{{ simulationConfig.reddit_config.viral_threshold }}</span>
                     </div>
                     <div class="param-row">
-                      <span class="param-label">回音室强度</span>
+                      <span class="param-label">Intensidade da Câmara de Eco</span>
                       <span class="param-value">{{ simulationConfig.reddit_config.echo_chamber_strength }}</span>
                     </div>
                   </div>
@@ -327,10 +327,10 @@
               </div>
             </div>
 
-            <!-- LLM 配置推理 -->
+            <!-- Raciocínio de Configuração LLM -->
             <div v-if="simulationConfig.generation_reasoning" class="config-block">
               <div class="config-block-header">
-                <span class="config-block-title">LLM 配置推理</span>
+                <span class="config-block-title">Raciocínio de Configuração LLM</span>
               </div>
               <div class="reasoning-content">
                 <div 
