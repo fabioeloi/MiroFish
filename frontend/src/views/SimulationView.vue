@@ -237,31 +237,31 @@ const forceStopSimulation = async () => {
 
 const loadSimulationData = async () => {
   try {
-    addLog(`加载模拟数据: ${currentSimulationId.value}`)
-    
-    // 获取 simulation 信息
+    addLog(`Carregando dados da simulação: ${currentSimulationId.value}`)
+
+    // Obter informações da simulação
     const simRes = await getSimulation(currentSimulationId.value)
     if (simRes.success && simRes.data) {
       const simData = simRes.data
-      
-      // 获取 project 信息
+
+      // Obter informações do projeto
       if (simData.project_id) {
         const projRes = await getProject(simData.project_id)
         if (projRes.success && projRes.data) {
           projectData.value = projRes.data
-          addLog(`项目加载成功: ${projRes.data.project_id}`)
-          
-          // 获取 graph 数据
+          addLog(`Projeto carregado com sucesso: ${projRes.data.project_id}`)
+
+          // Obter dados do grafo
           if (projRes.data.graph_id) {
             await loadGraph(projRes.data.graph_id)
           }
         }
       }
     } else {
-      addLog(`加载模拟数据失败: ${simRes.error || '未知错误'}`)
+      addLog(`Falha ao carregar dados da simulação: ${simRes.error || 'Erro desconhecido'}`)
     }
   } catch (err) {
-    addLog(`加载异常: ${err.message}`)
+    addLog(`Exceção ao carregar: ${err.message}`)
   }
 }
 
@@ -271,10 +271,10 @@ const loadGraph = async (graphId) => {
     const res = await getGraphData(graphId)
     if (res.success) {
       graphData.value = res.data
-      addLog('图谱数据加载成功')
+      addLog('Dados do grafo carregados com sucesso')
     }
   } catch (err) {
-    addLog(`图谱加载失败: ${err.message}`)
+    addLog(`Falha ao carregar grafo: ${err.message}`)
   } finally {
     graphLoading.value = false
   }
@@ -287,12 +287,12 @@ const refreshGraph = () => {
 }
 
 onMounted(async () => {
-  addLog('SimulationView 初始化')
-  
-  // 检查并关闭正在运行的模拟（用户从 Step 3 返回时）
+  addLog('SimulationView inicializado')
+
+  // Verificar e encerrar simulação em execução (quando o usuário retorna do Passo 3)
   await checkAndStopRunningSimulation()
-  
-  // 加载模拟数据
+
+  // Carregar dados da simulação
   loadSimulationData()
 })
 </script>

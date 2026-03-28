@@ -539,28 +539,28 @@ watch(() => route.path, (newPath) => {
 })
 
 onMounted(async () => {
-  // 确保 DOM 渲染完成后再加载数据
+  // Garante que o DOM esteja renderizado antes de carregar os dados
   await nextTick()
   await loadHistory()
   
-  // 等待 DOM 渲染后初始化观察器
+  // Aguarda a renderização do DOM antes de inicializar o observer
   setTimeout(() => {
     initObserver()
   }, 100)
 })
 
-// 如果使用 keep-alive，在组件激活时重新加载数据
+// Se usar keep-alive, recarrega os dados ao ativar o componente
 onActivated(() => {
   loadHistory()
 })
 
 onUnmounted(() => {
-  // 清理 Intersection Observer
+  // Limpa o Intersection Observer
   if (observer) {
     observer.disconnect()
     observer = null
   }
-  // 清理防抖定时器
+  // Limpa o timer de debounce
   if (expandDebounceTimer) {
     clearTimeout(expandDebounceTimer)
     expandDebounceTimer = null
@@ -569,7 +569,7 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-/* 容器 */
+/* Contêiner */
 .history-database {
   position: relative;
   width: 100%;

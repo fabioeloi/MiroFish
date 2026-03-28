@@ -83,13 +83,13 @@ Clique na imagem para assistir à previsão profunda do MiroFish sobre o final p
 
 > **Previsões Financeiras**, **Previsões de Notícias Políticas** e mais exemplos em breve...
 
-## 🔄 工作流程
+## 🔄 Fluxo de Trabalho
 
-1. **图谱构建**：现实种子提取 & 个体与群体记忆注入 & GraphRAG构建
-2. **环境搭建**：实体关系抽取 & 人设生成 & 环境配置Agent注入仿真参数
-3. **开始模拟**：双平台并行模拟 & 自动解析预测需求 & 动态更新时序记忆
-4. **报告生成**：ReportAgent拥有丰富的工具集与模拟后环境进行深度交互
-5. **深度互动**：与模拟世界中的任意一位进行对话 & 与ReportAgent进行对话
+1. **Construção do Grafo**: Extração de sementes da realidade & Injeção de memória individual e coletiva & Construção de GraphRAG
+2. **Configuração do Ambiente**: Extração de relacionamentos entre entidades & Geração de personas & Injeção de parâmetros de simulação via agente de configuração
+3. **Início da Simulação**: Simulação paralela em duas plataformas & Análise automática de requisitos de previsão & Atualização dinâmica de memória temporal
+4. **Geração de Relatório**: ReportAgent com conjunto rico de ferramentas para interação profunda com o ambiente pós-simulação
+5. **Interação Profunda**: Converse com qualquer agente no mundo simulado & Interaja com o ReportAgent
 
 ## 🚀 快速开始
 
