@@ -1938,7 +1938,7 @@ onUnmounted(() => {
   color: #FF5722;
 }
 
-/* 模块区域 */
+/* Seção de módulo */
 .modal-section {
   margin-bottom: 28px;
 }
@@ -1964,7 +1964,7 @@ onUnmounted(() => {
   border-left: 3px solid #E0E0E0;
 }
 
-/* 话题标签 */
+/* Tags de tópicos */
 .topics-grid {
   display: flex;
   flex-wrap: wrap;
@@ -1986,7 +1986,7 @@ onUnmounted(() => {
   color: #0D47A1;
 }
 
-/* 详细人设 */
+/* Persona detalhada */
 .persona-dimensions {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -2272,7 +2272,7 @@ onUnmounted(() => {
   margin: 0;
 }
 
-/* 模拟轮数配置样式 */
+/* Estilos de configuração de rodadas de simulação */
 .rounds-config-section {
   margin: 24px 0;
   padding-top: 24px;

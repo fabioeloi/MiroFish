@@ -63,7 +63,7 @@
                 <button class="detail-close" @click="closeDetailPanel">×</button>
               </div>
               
-              <!-- 节点详情 -->
+              <!-- Detalhes do nó -->
               <div v-if="selectedItem.type === 'node'" class="detail-content">
                 <div class="detail-row">
                   <span class="detail-label">Name:</span>
@@ -104,9 +104,9 @@
                 </div>
               </div>
               
-              <!-- 边详情 -->
+              <!-- Detalhes da aresta -->
               <div v-else class="detail-content">
-                <!-- 关系展示 -->
+                <!-- Exibição da relação -->
                 <div class="edge-relation">
                   <span class="edge-source">{{ selectedItem.data.source_name || selectedItem.data.source_node_name }}</span>
                   <span class="edge-arrow">→</span>
@@ -164,17 +164,17 @@
             </div>
           </div>
           
-          <!-- 加载状态 -->
+          <!-- Estado de carregamento -->
           <div v-else-if="graphLoading" class="graph-loading">
             <div class="loading-animation">
               <div class="loading-ring"></div>
               <div class="loading-ring"></div>
               <div class="loading-ring"></div>
             </div>
-            <p class="loading-text">图谱数据加载中...</p>
+            <p class="loading-text">Carregando dados do grafo...</p>
           </div>
-          
-          <!-- 等待构建 -->
+
+          <!-- Aguardando construção -->
           <div v-else-if="currentPhase < 1" class="graph-waiting">
             <div class="waiting-icon">
               <svg viewBox="0 0 100 100" class="network-icon">
@@ -189,22 +189,22 @@
                 <line x1="50" y1="72" x2="74" y2="66" stroke="#000" stroke-width="1"/>
               </svg>
             </div>
-            <p class="waiting-text">等待本体生成</p>
-            <p class="waiting-hint">生成完成后将自动开始构建图谱</p>
+            <p class="waiting-text">Aguardando geração da ontologia</p>
+            <p class="waiting-hint">A construção do grafo iniciará automaticamente após a geração</p>
           </div>
-          
-          <!-- 构建中但还没有数据 -->
+
+          <!-- Construindo mas ainda sem dados -->
           <div v-else-if="currentPhase === 1 && !graphData" class="graph-waiting">
             <div class="loading-animation">
               <div class="loading-ring"></div>
               <div class="loading-ring"></div>
               <div class="loading-ring"></div>
             </div>
-            <p class="waiting-text">图谱构建中</p>
-            <p class="waiting-hint">数据即将显示...</p>
+            <p class="waiting-text">Construindo grafo</p>
+            <p class="waiting-hint">Os dados aparecerão em breve...</p>
           </div>
-          
-          <!-- 错误状态 -->
+
+          <!-- Estado de erro -->
           <div v-else-if="error" class="graph-error">
             <span class="error-icon">⚠</span>
             <p>{{ error }}</p>
