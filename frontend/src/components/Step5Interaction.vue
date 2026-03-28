@@ -697,21 +697,21 @@ const sendToReportAgent = async (message) => {
   if (res.success && res.data) {
     chatHistory.value.push({
       role: 'assistant',
-      content: res.data.response || res.data.answer || '无响应',
+      content: res.data.response || res.data.answer || 'Sem resposta',
       timestamp: new Date().toISOString()
     })
-    addLog('Report Agent 已回复')
+    addLog('Report Agent respondeu')
   } else {
-    throw new Error(res.error || '请求失败')
+    throw new Error(res.error || 'Requisição falhou')
   }
 }
 
 const sendToAgent = async (message) => {
   if (!selectedAgent.value || selectedAgentIndex.value === null) {
-    throw new Error('请先选择一个模拟个体')
+    throw new Error('Por favor, selecione um indivíduo simulado primeiro')
   }
-  
-  addLog(`向 ${selectedAgent.value.username} 发送: ${message.substring(0, 50)}...`)
+
+  addLog(`Enviando para ${selectedAgent.value.username}: ${message.substring(0, 50)}...`)
   
   // Build prompt with chat history
   let prompt = message
@@ -719,9 +719,9 @@ const sendToAgent = async (message) => {
     const historyContext = chatHistory.value
       .filter(msg => msg.content !== message)
       .slice(-6)
-      .map(msg => `${msg.role === 'user' ? '提问者' : '你'}：${msg.content}`)
+      .map(msg => `${msg.role === 'user' ? 'Perguntador' : 'Você'}：${msg.content}`)
       .join('\n')
-    prompt = `以下是我们之前的对话：\n${historyContext}\n\n现在我的新问题是：${message}`
+    prompt = `A seguir está nossa conversa anterior:\n${historyContext}\n\nAgora minha nova pergunta é: ${message}`
   }
   
   const res = await interviewAgents({
@@ -761,12 +761,12 @@ const sendToAgent = async (message) => {
         content: responseContent,
         timestamp: new Date().toISOString()
       })
-      addLog(`${selectedAgent.value.username} 已回复`)
+      addLog(`${selectedAgent.value.username} respondeu`)
     } else {
-      throw new Error('无响应数据')
+      throw new Error('Nenhum dado de resposta')
     }
   } else {
-    throw new Error(res.error || '请求失败')
+    throw new Error(res.error || 'Requisição falhou')
   }
 }
 
@@ -803,7 +803,7 @@ const submitSurvey = async () => {
   if (selectedAgents.value.size === 0 || !surveyQuestion.value.trim()) return
   
   isSurveying.value = true
-  addLog(`发送问卷给 ${selectedAgents.value.size} 个对象...`)
+  addLog(`Enviando questionário para ${selectedAgents.value.size} participantes...`)
   
   try {
     const interviews = Array.from(selectedAgents.value).map(idx => ({
@@ -830,20 +830,20 @@ const submitSurvey = async () => {
         const agent = profiles.value[agentIdx]
         
         // 优先使用 reddit 平台回复，其次 twitter
-        let responseContent = '无响应'
-        
+        let responseContent = 'Sem resposta'
+
         if (typeof resultsDict === 'object' && !Array.isArray(resultsDict)) {
           const redditKey = `reddit_${agentIdx}`
           const twitterKey = `twitter_${agentIdx}`
           const agentResult = resultsDict[redditKey] || resultsDict[twitterKey]
           if (agentResult) {
-            responseContent = agentResult.response || agentResult.answer || '无响应'
+            responseContent = agentResult.response || agentResult.answer || 'Sem resposta'
           }
         } else if (Array.isArray(resultsDict)) {
           // 兼容数组格式
           const matchedResult = resultsDict.find(r => r.agent_id === agentIdx)
           if (matchedResult) {
-            responseContent = matchedResult.response || matchedResult.answer || '无响应'
+            responseContent = matchedResult.response || matchedResult.answer || 'Sem resposta'
           }
         }
         

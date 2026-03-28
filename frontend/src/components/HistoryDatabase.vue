@@ -450,7 +450,7 @@ const loadHistory = async () => {
   }
 }
 
-// 初始化 IntersectionObserver
+// Inicializa o IntersectionObserver
 const initObserver = () => {
   if (observer) {
     observer.disconnect()
@@ -461,30 +461,30 @@ const initObserver = () => {
       entries.forEach((entry) => {
         const shouldExpand = entry.isIntersecting
         
-        // 更新待执行的目标状态（无论是否在动画中都要记录最新的目标状态）
+        // Atualiza o estado-alvo pendente (registra sempre o estado mais recente, independente de animação)
         pendingState = shouldExpand
         
-        // 清除之前的防抖定时器（新的滚动意图会覆盖旧的）
+        // Limpa o timer de debounce anterior (nova intenção de rolagem substitui a antiga)
         if (expandDebounceTimer) {
           clearTimeout(expandDebounceTimer)
           expandDebounceTimer = null
         }
         
-        // 如果正在动画中，只记录状态，等动画结束后处理
+        // Se estiver animando, apenas registra o estado e aguarda o fim da animação
         if (isAnimating) return
         
-        // 如果目标状态与当前状态相同，不需要处理
+        // Se o estado-alvo for igual ao estado atual, não há necessidade de processar
         if (shouldExpand === isExpanded.value) {
           pendingState = null
           return
         }
         
-        // 使用防抖延迟状态切换，防止快速闪烁
-        // 展开时延迟较短(50ms)，收起时延迟较长(200ms)以增加稳定性
+        // Usa debounce para atrasar a troca de estado e evitar flickering rápido
+        // Atraso menor ao expandir (50ms), maior ao recolher (200ms) para maior estabilidade
         const delay = shouldExpand ? 50 : 200
         
         expandDebounceTimer = setTimeout(() => {
-          // 检查是否正在动画
+          // Verifica se está em animação
           if (isAnimating) return
           
           // 检查待执行状态是否仍需要执行（可能已被后续滚动覆盖）

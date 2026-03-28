@@ -346,28 +346,28 @@
         </div>
       </div>
 
-      <!-- Step 04: 初始激活编排 -->
+      <!-- Step 04: Orquestração de Ativação Inicial -->
       <div class="step-card" :class="{ 'active': phase === 3, 'completed': phase > 3 }">
         <div class="card-header">
           <div class="step-info">
             <span class="step-num">04</span>
-            <span class="step-title">初始激活编排</span>
+            <span class="step-title">Orquestração de Ativação Inicial</span>
           </div>
           <div class="step-status">
-            <span v-if="phase > 3" class="badge success">已完成</span>
-            <span v-else-if="phase === 3" class="badge processing">编排中</span>
-            <span v-else class="badge pending">等待</span>
+            <span v-if="phase > 3" class="badge success">Concluído</span>
+            <span v-else-if="phase === 3" class="badge processing">Orquestrando</span>
+            <span v-else class="badge pending">Aguardando</span>
           </div>
         </div>
 
         <div class="card-content">
           <p class="api-note">POST /api/simulation/prepare</p>
           <p class="description">
-            基于叙事方向，自动生成初始激活事件与热点话题，引导模拟世界的初始状态
+            Com base na direção narrativa, eventos de ativação inicial e tópicos em alta são gerados automaticamente para guiar o estado inicial do mundo simulado
           </p>
 
           <div v-if="simulationConfig?.event_config" class="orchestration-content">
-            <!-- 叙事方向 -->
+            <!-- Direção Narrativa -->
             <div class="narrative-box">
               <span class="box-label narrative-label">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="special-icon">
@@ -380,14 +380,14 @@
                     </linearGradient>
                   </defs>
                 </svg>
-                叙事引导方向
+                Direção Narrativa
               </span>
               <p class="narrative-text">{{ simulationConfig.event_config.narrative_direction }}</p>
             </div>
 
-            <!-- 热点话题 -->
+            <!-- Tópicos em Alta -->
             <div class="topics-section">
-              <span class="box-label">初始热点话题</span>
+              <span class="box-label">Tópicos em Alta Iniciais</span>
               <div class="hot-topics-grid">
                 <span v-for="topic in simulationConfig.event_config.hot_topics" :key="topic" class="hot-topic-tag">
                   # {{ topic }}
@@ -395,9 +395,9 @@
               </div>
             </div>
 
-            <!-- 初始帖子流 -->
+            <!-- Sequência de Posts Iniciais -->
             <div class="initial-posts-section">
-              <span class="box-label">初始激活序列 ({{ simulationConfig.event_config.initial_posts.length }})</span>
+              <span class="box-label">Sequência de Ativação Inicial ({{ simulationConfig.event_config.initial_posts.length }})</span>
               <div class="posts-timeline">
                 <div v-for="(post, idx) in simulationConfig.event_config.initial_posts" :key="idx" class="timeline-item">
                   <div class="timeline-marker"></div>
