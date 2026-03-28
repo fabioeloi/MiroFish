@@ -897,7 +897,7 @@ onUnmounted(() => {
   color: #2563EB;
 }
 
-/* 卡片描述 */
+/* Descrição do cartão */
 .card-desc {
   font-family: 'Inter', sans-serif;
   font-size: 0.75rem;
@@ -911,7 +911,7 @@ onUnmounted(() => {
   -webkit-box-orient: vertical;
 }
 
-/* 卡片底部 */
+/* Rodapé do cartão */
 .card-footer {
   position: relative;
   display: flex;

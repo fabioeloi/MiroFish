@@ -919,14 +919,14 @@ const fetchProfilesRealtime = async () => {
         expectedTotal.value = res.data.total_expected
       }
       
-      // 提取实体类型
+      // Extrai os tipos de entidade
       const types = new Set()
       profiles.value.forEach(p => {
         if (p.entity_type) types.add(p.entity_type)
       })
       entityTypes.value = Array.from(types)
-      
-      // 输出 Profile 生成进度日志（仅当数量变化时）
+
+      // Exibe logs de progresso de geração de Profiles (somente quando a contagem muda)
       const currentCount = profiles.value.length
       if (currentCount > 0 && currentCount !== lastLoggedProfileCount) {
         lastLoggedProfileCount = currentCount
@@ -934,22 +934,22 @@ const fetchProfilesRealtime = async () => {
         const latestProfile = profiles.value[currentCount - 1]
         const profileName = latestProfile?.name || latestProfile?.username || `Agent_${currentCount}`
         if (currentCount === 1) {
-          addLog(`开始生成Agent人设...`)
+          addLog(`Iniciando geração de personas de Agentes...`)
         }
-        addLog(`→ Agent人设 ${currentCount}/${total}: ${profileName} (${latestProfile?.profession || '未知职业'})`)
-        
-        // 如果全部生成完成
+        addLog(`→ Persona de Agente ${currentCount}/${total}: ${profileName} (${latestProfile?.profession || 'Profissão desconhecida'})`)
+
+        // Se todas as personas foram geradas
         if (expectedTotal.value && currentCount >= expectedTotal.value) {
-          addLog(`✓ 全部 ${currentCount} 个Agent人设生成完成`)
+          addLog(`✓ Todas as ${currentCount} personas de Agentes geradas com sucesso`)
         }
       }
     }
   } catch (err) {
-    console.warn('获取 Profiles 失败:', err)
+    console.warn('Falha ao buscar Profiles:', err)
   }
 }
 
-// 配置轮询
+// Polling de configuração
 const startConfigPolling = () => {
   configTimer = setInterval(fetchConfigRealtime, 2000)
 }
