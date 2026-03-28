@@ -135,7 +135,7 @@
           
           <!-- Config Preview -->
           <div v-if="simulationConfig" class="config-detail-panel">
-            <!-- 时间配置 -->
+            <!-- Configuração de Tempo -->
             <div class="config-block">
               <div class="config-grid">
                 <div class="config-item">
@@ -191,7 +191,7 @@
                   :key="agent.agent_id" 
                   class="agent-card"
                 >
-                  <!-- 卡片头部 -->
+                  <!-- Cabeçalho do Cartão -->
                   <div class="agent-card-header">
                     <div class="agent-identity">
                       <span class="agent-id">Agent {{ agent.agent_id }}</span>
@@ -642,7 +642,7 @@ import {
 } from '../api/simulation'
 
 const props = defineProps({
-  simulationId: String,  // 从父组件传入
+  simulationId: String,  // passado pelo componente pai
   projectData: Object,
   graphData: Object,
   systemLogs: Array
@@ -739,7 +739,7 @@ const addLog = (msg) => {
 
 // Lida com o clique no botão de iniciar simulação
 const handleStartSimulation = () => {
-  // 构建传递给父组件的参数
+  // Constrói os parâmetros a serem passados para o componente pai
   const params = {}
   
   if (useCustomRounds.value) {
@@ -914,7 +914,7 @@ const fetchProfilesRealtime = async () => {
     if (res.success && res.data) {
       const prevCount = profiles.value.length
       profiles.value = res.data.profiles || []
-      // 只有当 API 返回有效值时才更新，避免覆盖已有的有效值
+      // Atualiza somente quando a API retorna um valor válido, evitando sobrescrever valores existentes
       if (res.data.total_expected) {
         expectedTotal.value = res.data.total_expected
       }
@@ -970,87 +970,87 @@ const fetchConfigRealtime = async () => {
     if (res.success && res.data) {
       const data = res.data
       
-      // 输出配置生成阶段日志（避免重复）
+      // Exibe logs de fase de geração de configuração (evita duplicação)
       if (data.generation_stage && data.generation_stage !== lastLoggedConfigStage) {
         lastLoggedConfigStage = data.generation_stage
         if (data.generation_stage === 'generating_profiles') {
-          addLog('正在生成Agent人设配置...')
+          addLog('Gerando configuração de personas de Agentes...')
         } else if (data.generation_stage === 'generating_config') {
-          addLog('正在调用LLM生成模拟配置参数...')
+          addLog('Chamando LLM para gerar parâmetros de configuração da simulação...')
         }
       }
-      
-      // 如果配置已生成
+
+      // Se a configuração já foi gerada
       if (data.config_generated && data.config) {
         simulationConfig.value = data.config
-        addLog('✓ 模拟配置生成完成')
-        
-        // 显示详细配置摘要
+        addLog('✓ Configuração de simulação gerada com sucesso')
+
+        // Exibe resumo detalhado da configuração
         if (data.summary) {
-          addLog(`  ├─ Agent数量: ${data.summary.total_agents}个`)
-          addLog(`  ├─ 模拟时长: ${data.summary.simulation_hours}小时`)
-          addLog(`  ├─ 初始帖子: ${data.summary.initial_posts_count}条`)
-          addLog(`  ├─ 热点话题: ${data.summary.hot_topics_count}个`)
-          addLog(`  └─ 平台配置: Twitter ${data.summary.has_twitter_config ? '✓' : '✗'}, Reddit ${data.summary.has_reddit_config ? '✓' : '✗'}`)
+          addLog(`  ├─ Quantidade de Agentes: ${data.summary.total_agents}`)
+          addLog(`  ├─ Duração da simulação: ${data.summary.simulation_hours} horas`)
+          addLog(`  ├─ Posts iniciais: ${data.summary.initial_posts_count}`)
+          addLog(`  ├─ Tópicos em alta: ${data.summary.hot_topics_count}`)
+          addLog(`  └─ Configuração de plataformas: Twitter ${data.summary.has_twitter_config ? '✓' : '✗'}, Reddit ${data.summary.has_reddit_config ? '✓' : '✗'}`)
         }
         
-        // 显示时间配置详情
+        // Exibe detalhes da configuração de tempo
         if (data.config.time_config) {
           const tc = data.config.time_config
-          addLog(`时间配置: 每轮${tc.minutes_per_round}分钟, 共${Math.floor((tc.total_simulation_hours * 60) / tc.minutes_per_round)}轮`)
+          addLog(`Configuração de tempo: ${tc.minutes_per_round} min/rodada, total de ${Math.floor((tc.total_simulation_hours * 60) / tc.minutes_per_round)} rodadas`)
         }
-        
-        // 显示事件配置
+
+        // Exibe configuração de eventos
         if (data.config.event_config?.narrative_direction) {
           const narrative = data.config.event_config.narrative_direction
-          addLog(`叙事方向: ${narrative.length > 50 ? narrative.substring(0, 50) + '...' : narrative}`)
+          addLog(`Direção narrativa: ${narrative.length > 50 ? narrative.substring(0, 50) + '...' : narrative}`)
         }
-        
+
         stopConfigPolling()
         phase.value = 4
-        addLog('✓ 环境搭建完成，可以开始模拟')
+        addLog('✓ Ambiente configurado, simulação pode ser iniciada')
         emit('update-status', 'completed')
       }
     }
   } catch (err) {
-    console.warn('获取 Config 失败:', err)
+    console.warn('Falha ao buscar Config:', err)
   }
 }
 
 const loadPreparedData = async () => {
   phase.value = 2
-  addLog('正在加载已有配置数据...')
+  addLog('Carregando dados de configuração existentes...')
 
-  // 最后获取一次 Profiles
+  // Busca Profiles uma última vez
   await fetchProfilesRealtime()
-  addLog(`已加载 ${profiles.value.length} 个Agent人设`)
+  addLog(`${profiles.value.length} personas de Agentes carregadas`)
 
-  // 获取配置（使用实时接口）
+  // Busca configuração (usando endpoint em tempo real)
   try {
     const res = await getSimulationConfigRealtime(props.simulationId)
     if (res.success && res.data) {
       if (res.data.config_generated && res.data.config) {
         simulationConfig.value = res.data.config
-        addLog('✓ 模拟配置加载成功')
-        
-        // 显示详细配置摘要
+        addLog('✓ Configuração de simulação carregada com sucesso')
+
+        // Exibe resumo detalhado da configuração
         if (res.data.summary) {
-          addLog(`  ├─ Agent数量: ${res.data.summary.total_agents}个`)
-          addLog(`  ├─ 模拟时长: ${res.data.summary.simulation_hours}小时`)
-          addLog(`  └─ 初始帖子: ${res.data.summary.initial_posts_count}条`)
+          addLog(`  ├─ Quantidade de Agentes: ${res.data.summary.total_agents}`)
+          addLog(`  ├─ Duração da simulação: ${res.data.summary.simulation_hours} horas`)
+          addLog(`  └─ Posts iniciais: ${res.data.summary.initial_posts_count}`)
         }
-        
-        addLog('✓ 环境搭建完成，可以开始模拟')
+
+        addLog('✓ Ambiente configurado, simulação pode ser iniciada')
         phase.value = 4
         emit('update-status', 'completed')
       } else {
-        // 配置尚未生成，开始轮询
-        addLog('配置生成中，开始轮询等待...')
+        // Configuração ainda não gerada, iniciar polling
+        addLog('Configuração sendo gerada, iniciando polling...')
         startConfigPolling()
       }
     }
   } catch (err) {
-    addLog(`加载配置失败: ${err.message}`)
+    addLog(`Falha ao carregar configuração: ${err.message}`)
     emit('update-status', 'error')
   }
 }
@@ -1066,9 +1066,9 @@ watch(() => props.systemLogs?.length, () => {
 })
 
 onMounted(() => {
-  // 自动开始准备流程
+  // Inicia automaticamente o fluxo de preparação
   if (props.simulationId) {
-    addLog('Step2 环境搭建初始化')
+    addLog('Step2: Inicializando configuração do ambiente')
     startPrepareSimulation()
   }
 })

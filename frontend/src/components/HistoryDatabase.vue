@@ -925,14 +925,14 @@ onUnmounted(() => {
   font-weight: 500;
 }
 
-/* 日期时间组合 */
+/* Combinação de data e hora */
 .card-datetime {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-/* 底部轮数进度显示 */
+/* Exibição do progresso de rodadas no rodapé */
 .card-footer .card-progress {
   display: flex;
   align-items: center;
@@ -946,12 +946,12 @@ onUnmounted(() => {
   font-size: 0.5rem;
 }
 
-/* 进度状态颜色 - 底部 */
+/* Cores de estado de progresso - rodapé */
 .card-footer .card-progress.completed { color: #10B981; }
 .card-footer .card-progress.in-progress { color: #F59E0B; }
 .card-footer .card-progress.not-started { color: #9CA3AF; }
 
-/* 底部装饰线 */
+/* Linha decorativa inferior */
 .card-bottom-line {
   position: absolute;
   bottom: 0;
@@ -967,7 +967,7 @@ onUnmounted(() => {
   width: 100%;
 }
 
-/* 空状态 */
+/* Estado vazio */
 .empty-state, .loading-state {
   display: flex;
   flex-direction: column;
@@ -995,7 +995,7 @@ onUnmounted(() => {
   to { transform: rotate(360deg); }
 }
 
-/* 响应式 */
+/* Responsividade */
 @media (max-width: 1200px) {
   .project-card {
     width: 240px;
@@ -1011,7 +1011,7 @@ onUnmounted(() => {
   }
 }
 
-/* ===== 历史回放详情弹窗样式 ===== */
+/* ===== Estilos do modal de detalhes do histórico de reprodução ===== */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -1037,7 +1037,7 @@ onUnmounted(() => {
   box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
-/* 动画过渡 */
+/* Transições de animação */
 .modal-enter-active,
 .modal-leave-active {
   transition: opacity 0.3s ease;
@@ -1066,7 +1066,7 @@ onUnmounted(() => {
   opacity: 0;
 }
 
-/* 弹窗头部 */
+/* Cabeçalho do modal */
 .modal-header {
   display: flex;
   justify-content: space-between;
@@ -1133,7 +1133,7 @@ onUnmounted(() => {
   color: #111827;
 }
 
-/* 弹窗内容 */
+/* Conteúdo do modal */
 .modal-body {
   padding: 24px 32px;
 }
@@ -1175,7 +1175,7 @@ onUnmounted(() => {
   padding-right: 4px;
 }
 
-/* 自定义滚动条样式 */
+/* Estilo personalizado de barra de rolagem */
 .modal-files::-webkit-scrollbar {
   width: 4px;
 }
@@ -1229,7 +1229,7 @@ onUnmounted(() => {
   text-align: center;
 }
 
-/* 推演回放分割线 */
+/* Divisor de reprodução de previsão */
 .modal-divider {
   display: flex;
   align-items: center;
@@ -1253,7 +1253,7 @@ onUnmounted(() => {
   white-space: nowrap;
 }
 
-/* 导航按钮 */
+/* Botões de navegação */
 .modal-actions {
   display: flex;
   gap: 16px;
@@ -1320,7 +1320,7 @@ onUnmounted(() => {
   color: #111827;
 }
 
-/* 不可回放提示 */
+/* Aviso de não reproduzível */
 .modal-playback-hint {
   display: flex;
   align-items: center;

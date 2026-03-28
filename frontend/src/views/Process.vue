@@ -4,10 +4,10 @@
     <nav class="navbar">
       <div class="nav-brand" @click="goHome">MIROFISH</div>
       
-      <!-- 中间步骤指示器 -->
+      <!-- Indicador de etapa central -->
       <div class="nav-center">
         <div class="step-badge">STEP 01</div>
-        <div class="step-name">图谱构建</div>
+        <div class="step-name">Construção do Grafo</div>
       </div>
 
       <div class="nav-status">
