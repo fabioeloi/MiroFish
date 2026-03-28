@@ -487,21 +487,21 @@ const initObserver = () => {
           // Verifica se está em animação
           if (isAnimating) return
           
-          // 检查待执行状态是否仍需要执行（可能已被后续滚动覆盖）
+          // Verifica se o estado pendente ainda precisa ser executado (pode ter sido substituído por rolagem posterior)
           if (pendingState === null || pendingState === isExpanded.value) return
           
-          // 设置动画锁
+          // Define o bloqueio de animação
           isAnimating = true
           isExpanded.value = pendingState
           pendingState = null
           
-          // 动画完成后解除锁定，并检查是否有待处理的状态变化
+          // Após a animação, libera o bloqueio e verifica se há mudanças de estado pendentes
           setTimeout(() => {
             isAnimating = false
             
-            // 动画结束后，检查是否有新的待执行状态
+            // Após a animação, verifica se há novo estado pendente a executar
             if (pendingState !== null && pendingState !== isExpanded.value) {
-              // 延迟一小段时间再执行，避免太快切换
+              // Aguarda um pequeno intervalo antes de executar para evitar troca muito rápida
               expandDebounceTimer = setTimeout(() => {
                 if (pendingState !== null && pendingState !== isExpanded.value) {
                   isAnimating = true
@@ -518,7 +518,7 @@ const initObserver = () => {
       })
     },
     {
-      // 使用多个阈值，使检测更平滑
+      // Usa múltiplos limiares para tornar a detecção mais suave
       threshold: [0.4, 0.6, 0.8],
       // 调整 rootMargin，视口底部向上收缩，需要滚动更多才触发展开
       rootMargin: '0px 0px -150px 0px'

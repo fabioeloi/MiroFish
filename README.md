@@ -24,41 +24,41 @@ Motor de Inteligência Coletiva Simples e Universal, Predizendo Tudo
 
 </div>
 
-## ⚡ 项目概述
+## ⚡ Visão Geral do Projeto
 
-**MiroFish** 是一款基于多智能体技术的新一代 AI 预测引擎。通过提取现实世界的种子信息（如突发新闻、政策草案、金融信号），自动构建出高保真的平行数字世界。在此空间内，成千上万个具备独立人格、长期记忆与行为逻辑的智能体进行自由交互与社会演化。你可透过「上帝视角」动态注入变量，精准推演未来走向——**让未来在数字沙盘中预演，助决策在百战模拟后胜出**。
+**MiroFish** é um motor de previsão de IA de próxima geração baseado em tecnologia de múltiplos agentes. Ao extrair informações-semente do mundo real (como notícias de última hora, rascunhos de políticas ou sinais financeiros), ele constrói automaticamente um mundo digital paralelo de alta fidelidade. Nesse espaço, milhares de agentes inteligentes com personalidades independentes, memória de longo prazo e lógica comportamental interagem livremente e passam por evolução social. Você pode injetar variáveis dinamicamente a partir de uma "visão divina" para deduzir com precisão trajetórias futuras — **ensaie o futuro em um sandbox digital e vença decisões após inúmeras simulações**.
 
-> 你只需：上传种子材料（数据分析报告或者有趣的小说故事），并用自然语言描述预测需求</br>
-> MiroFish 将返回：一份详尽的预测报告，以及一个可深度交互的高保真数字世界
+> Você só precisa: enviar materiais-semente (relatórios de análise de dados ou histórias de romances interessantes) e descrever seus requisitos de previsão em linguagem natural</br>
+> MiroFish retornará: um relatório de previsão detalhado e um mundo digital de alta fidelidade com o qual você pode interagir profundamente
 
-### 我们的愿景
+### Nossa Visão
 
-MiroFish 致力于打造映射现实的群体智能镜像，通过捕捉个体互动引发的群体涌现，突破传统预测的局限：
+MiroFish é dedicado a criar um espelho de inteligência coletiva que mapeia a realidade. Ao capturar a emergência coletiva desencadeada por interações individuais, rompemos as limitações da previsão tradicional:
 
-- **于宏观**：我们是决策者的预演实验室，让政策与公关在零风险中试错
-- **于微观**：我们是个人用户的创意沙盘，无论是推演小说结局还是探索脑洞，皆可有趣、好玩、触手可及
+- **No nível macro**: Somos um laboratório de ensaio para tomadores de decisão, permitindo que políticas e relações públicas sejam testadas com risco zero
+- **No nível micro**: Somos um sandbox criativo para usuários individuais — seja deduzindo finais de romances ou explorando cenários imaginativos, tudo pode ser divertido, lúdico e acessível
 
-从严肃预测到趣味仿真，我们让每一个如果都能看见结果，让预测万物成为可能。
+De previsões sérias a simulações lúdicas, fazemos com que cada "e se" possa ver seu resultado, tornando possível prever qualquer coisa.
 
-## 🌐 在线体验
+## 🌐 Demo Online
 
-欢迎访问在线 Demo 演示环境，体验我们为你准备的一次关于热点舆情事件的推演预测：[mirofish-live-demo](https://666ghj.github.io/mirofish-demo/)
+Bem-vindo ao nosso ambiente de demonstração online. Experimente uma simulação de previsão sobre eventos de opinião pública em destaque que preparamos para você: [mirofish-live-demo](https://666ghj.github.io/mirofish-demo/)
 
-## 📸 系统截图
+## 📸 Capturas de Tela
 
 <div align="center">
 <table>
 <tr>
-<td><img src="./static/image/Screenshot/运行截图1.png" alt="截图1" width="100%"/></td>
-<td><img src="./static/image/Screenshot/运行截图2.png" alt="截图2" width="100%"/></td>
+<td><img src="./static/image/Screenshot/运行截图1.png" alt="Captura de Tela 1" width="100%"/></td>
+<td><img src="./static/image/Screenshot/运行截图2.png" alt="Captura de Tela 2" width="100%"/></td>
 </tr>
 <tr>
-<td><img src="./static/image/Screenshot/运行截图3.png" alt="截图3" width="100%"/></td>
-<td><img src="./static/image/Screenshot/运行截图4.png" alt="截图4" width="100%"/></td>
+<td><img src="./static/image/Screenshot/运行截图3.png" alt="Captura de Tela 3" width="100%"/></td>
+<td><img src="./static/image/Screenshot/运行截图4.png" alt="Captura de Tela 4" width="100%"/></td>
 </tr>
 <tr>
-<td><img src="./static/image/Screenshot/运行截图5.png" alt="截图5" width="100%"/></td>
-<td><img src="./static/image/Screenshot/运行截图6.png" alt="截图6" width="100%"/></td>
+<td><img src="./static/image/Screenshot/运行截图5.png" alt="Captura de Tela 5" width="100%"/></td>
+<td><img src="./static/image/Screenshot/运行截图6.png" alt="Captura de Tela 6" width="100%"/></td>
 </tr>
 </table>
 </div>

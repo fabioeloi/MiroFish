@@ -137,7 +137,7 @@ const toggleMaximize = (target) => {
 }
 
 const handleGoBack = () => {
-  // 返回到 process 页面
+  // Retornar para a página process
   if (projectData.value?.project_id) {
     router.push({ name: 'Process', params: { projectId: projectData.value.project_id } })
   } else {
@@ -146,35 +146,35 @@ const handleGoBack = () => {
 }
 
 const handleNextStep = (params = {}) => {
-  addLog('进入 Step 3: 开始模拟')
-  
-  // 记录模拟轮数配置
+  addLog('Entrando no Passo 3: Iniciar Simulação')
+
+  // Registrar configuração de rodadas de simulação
   if (params.maxRounds) {
-    addLog(`自定义模拟轮数: ${params.maxRounds} 轮`)
+    addLog(`Rodadas de simulação personalizadas: ${params.maxRounds} rodadas`)
   } else {
-    addLog('使用自动配置的模拟轮数')
+    addLog('Usando configuração automática de rodadas de simulação')
   }
-  
-  // 构建路由参数
+
+  // Construir parâmetros de rota
   const routeParams = {
     name: 'SimulationRun',
     params: { simulationId: currentSimulationId.value }
   }
-  
-  // 如果有自定义轮数，通过 query 参数传递
+
+  // Se houver rodadas personalizadas, passar via parâmetro query
   if (params.maxRounds) {
     routeParams.query = { maxRounds: params.maxRounds }
   }
-  
-  // 跳转到 Step 3 页面
+
+  // Navegar para a página do Passo 3
   router.push(routeParams)
 }
 
 // --- Data Logic ---
 
 /**
- * 检查并关闭正在运行的模拟
- * 当用户从 Step 3 返回到 Step 2 时，默认用户要退出模拟
+ * Verificar e fechar simulação em execução
+ * Quando o usuário retorna do Passo 3 para o Passo 2, presume-se que deseja sair da simulação
  */
 const checkAndStopRunningSimulation = async () => {
   if (!currentSimulationId.value) return
