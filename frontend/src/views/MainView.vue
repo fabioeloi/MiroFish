@@ -15,7 +15,7 @@
             :class="{ active: viewMode === mode }"
             @click="viewMode = mode"
           >
-            {{ { graph: '图谱', split: '双栏', workbench: '工作台' }[mode] }}
+            {{ { graph: 'Grafo', split: 'Dupla Coluna', workbench: 'Bancada de Trabalho' }[mode] }}
           </button>
         </div>
       </div>
@@ -48,7 +48,7 @@
 
       <!-- Right Panel: Step Components -->
       <div class="panel-wrapper right" :style="rightPanelStyle">
-        <!-- Step 1: 图谱构建 -->
+        <!-- Step 1: Construção do Grafo -->
         <Step1GraphBuild 
           v-if="currentStep === 1"
           :currentPhase="currentPhase"
@@ -59,7 +59,7 @@
           :systemLogs="systemLogs"
           @next-step="handleNextStep"
         />
-        <!-- Step 2: 环境搭建 -->
+        <!-- Step 2: Configuração do Ambiente -->
         <Step2EnvSetup
           v-else-if="currentStep === 2"
           :projectData="projectData"
@@ -90,8 +90,8 @@ const router = useRouter()
 const viewMode = ref('split') // graph | split | workbench
 
 // Step State
-const currentStep = ref(1) // 1: 图谱构建, 2: 环境搭建, 3: 开始模拟, 4: 报告生成, 5: 深度互动
-const stepNames = ['图谱构建', '环境搭建', '开始模拟', '报告生成', '深度互动']
+const currentStep = ref(1) // 1: Construção do Grafo, 2: Configuração do Ambiente, 3: Iniciar Simulação, 4: Geração de Relatório, 5: Interação Profunda
+const stepNames = ['Construção do Grafo', 'Configuração do Ambiente', 'Iniciar Simulação', 'Geração de Relatório', 'Interação Profunda']
 
 // Data State
 const currentProjectId = ref(route.params.projectId)
@@ -130,11 +130,11 @@ const statusClass = computed(() => {
 })
 
 const statusText = computed(() => {
-  if (error.value) return 'Error'
-  if (currentPhase.value >= 2) return 'Ready'
-  if (currentPhase.value === 1) return 'Building Graph'
-  if (currentPhase.value === 0) return 'Generating Ontology'
-  return 'Initializing'
+  if (error.value) return 'Erro'
+  if (currentPhase.value >= 2) return 'Pronto'
+  if (currentPhase.value === 1) return 'Construindo Grafo'
+  if (currentPhase.value === 0) return 'Gerando Ontologia'
+  return 'Inicializando'
 })
 
 // --- Helpers ---
@@ -159,11 +159,11 @@ const toggleMaximize = (target) => {
 const handleNextStep = (params = {}) => {
   if (currentStep.value < 5) {
     currentStep.value++
-    addLog(`进入 Step ${currentStep.value}: ${stepNames[currentStep.value - 1]}`)
-    
-    // 如果是从 Step 2 进入 Step 3，记录模拟轮数配置
+    addLog(`Entrando no Passo ${currentStep.value}: ${stepNames[currentStep.value - 1]}`)
+
+    // Se estiver indo do Passo 2 para o Passo 3, registrar configuração de rodadas de simulação
     if (currentStep.value === 3 && params.maxRounds) {
-      addLog(`自定义模拟轮数: ${params.maxRounds} 轮`)
+      addLog(`Rodadas de simulação personalizadas: ${params.maxRounds} rodadas`)
     }
   }
 }
@@ -171,14 +171,14 @@ const handleNextStep = (params = {}) => {
 const handleGoBack = () => {
   if (currentStep.value > 1) {
     currentStep.value--
-    addLog(`返回 Step ${currentStep.value}: ${stepNames[currentStep.value - 1]}`)
+    addLog(`Voltando ao Passo ${currentStep.value}: ${stepNames[currentStep.value - 1]}`)
   }
 }
 
 // --- Data Logic ---
 
 const initProject = async () => {
-  addLog('Project view initialized.')
+  addLog('Visualização do projeto inicializada.')
   if (currentProjectId.value === 'new') {
     await handleNewProject()
   } else {
@@ -189,8 +189,8 @@ const initProject = async () => {
 const handleNewProject = async () => {
   const pending = getPendingUpload()
   if (!pending.isPending || pending.files.length === 0) {
-    error.value = 'No pending files found.'
-    addLog('Error: No pending files found for new project.')
+    error.value = 'Nenhum arquivo pendente encontrado.'
+    addLog('Erro: Nenhum arquivo pendente encontrado para novo projeto.')
     return
   }
   
@@ -198,7 +198,7 @@ const handleNewProject = async () => {
     loading.value = true
     currentPhase.value = 0
     ontologyProgress.value = { message: 'Uploading and analyzing docs...' }
-    addLog('Starting ontology generation: Uploading files...')
+    addLog('Iniciando geração de ontologia: Enviando arquivos...')
     
     const formData = new FormData()
     pending.files.forEach(f => formData.append('files', f))
@@ -212,11 +212,11 @@ const handleNewProject = async () => {
       
       router.replace({ name: 'Process', params: { projectId: res.data.project_id } })
       ontologyProgress.value = null
-      addLog(`Ontology generated successfully for project ${res.data.project_id}`)
+      addLog(`Ontologia gerada com sucesso para o projeto ${res.data.project_id}`)
       await startBuildGraph()
     } else {
       error.value = res.error || 'Ontology generation failed'
-      addLog(`Error generating ontology: ${error.value}`)
+      addLog(`Erro ao gerar ontologia: ${error.value}`)
     }
   } catch (err) {
     error.value = err.message
@@ -229,12 +229,12 @@ const handleNewProject = async () => {
 const loadProject = async () => {
   try {
     loading.value = true
-    addLog(`Loading project ${currentProjectId.value}...`)
+    addLog(`Carregando projeto ${currentProjectId.value}...`)
     const res = await getProject(currentProjectId.value)
     if (res.success) {
       projectData.value = res.data
       updatePhaseByStatus(res.data.status)
-      addLog(`Project loaded. Status: ${res.data.status}`)
+      addLog(`Projeto carregado. Status: ${res.data.status}`)
       
       if (res.data.status === 'ontology_generated' && !res.data.graph_id) {
         await startBuildGraph()
@@ -248,7 +248,7 @@ const loadProject = async () => {
       }
     } else {
       error.value = res.error
-      addLog(`Error loading project: ${res.error}`)
+      addLog(`Erro ao carregar projeto: ${res.error}`)
     }
   } catch (err) {
     error.value = err.message
@@ -272,16 +272,16 @@ const startBuildGraph = async () => {
   try {
     currentPhase.value = 1
     buildProgress.value = { progress: 0, message: 'Starting build...' }
-    addLog('Initiating graph build...')
+    addLog('Iniciando construção do grafo...')
     
     const res = await buildGraph({ project_id: currentProjectId.value })
     if (res.success) {
-      addLog(`Graph build task started. Task ID: ${res.data.task_id}`)
+      addLog(`Tarefa de construção do grafo iniciada. ID da Tarefa: ${res.data.task_id}`)
       startGraphPolling()
       startPollingTask(res.data.task_id)
     } else {
       error.value = res.error
-      addLog(`Error starting build: ${res.error}`)
+      addLog(`Erro ao iniciar construção: ${res.error}`)
     }
   } catch (err) {
     error.value = err.message
@@ -305,7 +305,7 @@ const fetchGraphData = async () => {
         graphData.value = gRes.data
         const nodeCount = gRes.data.node_count || gRes.data.nodes?.length || 0
         const edgeCount = gRes.data.edge_count || gRes.data.edges?.length || 0
-        addLog(`Graph data refreshed. Nodes: ${nodeCount}, Edges: ${edgeCount}`)
+        addLog(`Dados do grafo atualizados. Nós: ${nodeCount}, Arestas: ${edgeCount}`)
       }
     }
   } catch (err) {
@@ -332,7 +332,7 @@ const pollTaskStatus = async (taskId) => {
       buildProgress.value = { progress: task.progress || 0, message: task.message }
       
       if (task.status === 'completed') {
-        addLog('Graph build task completed.')
+        addLog('Tarefa de construção do grafo concluída.')
         stopPolling()
         stopGraphPolling() // Stop polling, do final load
         currentPhase.value = 2
@@ -346,7 +346,7 @@ const pollTaskStatus = async (taskId) => {
       } else if (task.status === 'failed') {
         stopPolling()
         error.value = task.error
-        addLog(`Graph build task failed: ${task.error}`)
+        addLog(`Falha na tarefa de construção do grafo: ${task.error}`)
       }
     }
   } catch (e) {
@@ -374,7 +374,7 @@ const loadGraph = async (graphId) => {
 
 const refreshGraph = () => {
   if (projectData.value?.graph_id) {
-    addLog('Manual graph refresh triggered.')
+    addLog('Atualização manual do grafo acionada.')
     loadGraph(projectData.value.graph_id)
   }
 }
@@ -390,7 +390,7 @@ const stopGraphPolling = () => {
   if (graphPollTimer) {
     clearInterval(graphPollTimer)
     graphPollTimer = null
-    addLog('Graph polling stopped.')
+    addLog('Polling do grafo interrompido.')
   }
 }
 
